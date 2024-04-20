@@ -1,0 +1,13 @@
+﻿@model HotelBookingApp.Models.Reservation
+
+<h2>Booking Confirmation</h2>
+<p>Thank you, @Model.CustomerName. Your booking for Room @Model.Room.Number is confirmed.</p>
+<p>Additional Services:</p>
+<ul>
+    @foreach (var booking in Model.AdditionalBookings)
+    {
+        <li>Dinner Reservation: @(booking.DinnerReservation ? "Yes" : "No")</li>
+        <li>Tour Booking: @(booking.TourBooking ? "Yes" : "No")</li>
+        <li>Golf Package: @(booking.GolfPackage ? "Yes" : "No")</li>
+    }
+</ul>

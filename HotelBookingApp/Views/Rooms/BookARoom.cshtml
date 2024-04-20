@@ -1,0 +1,20 @@
+﻿@model IEnumerable<HotelBookingApp.Models.Room>
+
+<h2>Book a Room</h2>
+
+<ul>
+    @foreach (var room in Model)
+    {
+        <li>
+            Room Number: @room.Number, Type: @room.Type
+            <!-- Form to initiate booking for each room -->
+            <form asp-action="BookARoom" asp-controller="Rooms" method="post">
+                <input type="hidden" name="roomId" value="@room.RoomId" />
+                <!-- Optional: Inputs for date selection if needed -->
+                <input type="date" name="checkInDate" required placeholder="Check-in Date" />
+                <input type="date" name="checkOutDate" required placeholder="Check-out Date" />
+                <input type="submit" value="Book Now" />
+            </form>
+        </li>
+    }
+</ul>

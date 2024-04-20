@@ -1,0 +1,24 @@
+﻿@model HotelBookingApp.Models.AdditionalBooking
+
+<h2>Add Additional Services</h2>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" name="ReservationId" value="@ViewBag.ReservationId" />
+
+    <div>
+        <label>Dinner Reservation:</label>
+        <input type="checkbox" asp-for="DinnerReservation" />
+    </div>
+
+    <div>
+        <label>Tour Booking:</label>
+        <input type="checkbox" asp-for="TourBooking" />
+    </div>
+
+    <div>
+        <label>Golf Package:</label>
+        <input type="checkbox" asp-for="GolfPackage" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Services</button>
+</form>

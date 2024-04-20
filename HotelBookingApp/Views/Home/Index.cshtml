@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Our Hotel Booking Platform</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <!-- Display database connection status -->
+    <p>Database Connection Status: @ViewData["DbConnected"]</p>
+
+    <!-- Button to Book a Room -->
+    <a class="btn btn-primary" asp-controller="Rooms" asp-action="BookARoom">Book a Room</a>
+</div>

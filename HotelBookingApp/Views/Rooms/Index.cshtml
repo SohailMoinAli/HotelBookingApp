@@ -1,0 +1,32 @@
+﻿@model IEnumerable<HotelBookingApp.Models.RoomViewModel>
+
+<h2>Room List</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New Room</a>  <!-- Button to navigate to the create page -->
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th> <!-- Optionally added for future edit/delete actions -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Number)</td>
+                <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                <td>@Html.DisplayFor(modelItem => item.AvailabilityStatus)</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.RoomId">Edit</a>  <!-- Example Edit link -->
+                    <!-- Additional buttons for other actions like Delete can also be added here -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
