@@ -6,7 +6,7 @@ public class RoomsController : Controller
 {
     private readonly HotelDbContext _context;
 
-    public RoomsController(HotelDbContext context)
+    public RoomsController(HotelDbContext context) 
     {
         _context = context;
     }

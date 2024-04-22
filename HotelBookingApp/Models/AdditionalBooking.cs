@@ -15,5 +15,10 @@ namespace HotelBookingApp.Models
         public bool DinnerReservation { get; set; }
         public bool TourBooking { get; set; }
         public bool GolfPackage { get; set; }
+
+        // Price properties for each service
+        public decimal DinnerPrice { get; set; }
+        public decimal TourPrice { get; set; }
+        public decimal GolfPackagePrice { get; set; }
     }
 }
