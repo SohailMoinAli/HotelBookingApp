@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20240420024025_UpdateReservationWithAdditionalBookings")]
-    partial class UpdateReservationWithAdditionalBookings
+    [Migration("20240422231542_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,17 @@ namespace HotelBookingApp.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("AdditionalBookingId"));
 
+                    b.Property<decimal>("DinnerPrice")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<bool>("DinnerReservation")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("GolfPackage")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal>("GolfPackagePrice")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("ReservationId")
                         .HasColumnType("int");
@@ -44,11 +50,41 @@ namespace HotelBookingApp.Migrations
                     b.Property<bool>("TourBooking")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<decimal>("TourPrice")
+                        .HasColumnType("decimal(65,30)");
+
                     b.HasKey("AdditionalBookingId");
 
                     b.HasIndex("ReservationId");
 
                     b.ToTable("AdditionalBookings");
+                });
+
+            modelBuilder.Entity("HotelBookingApp.Models.Hotel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hotels");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.Reservation", b =>
@@ -67,7 +103,8 @@ namespace HotelBookingApp.Migrations
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -93,6 +130,9 @@ namespace HotelBookingApp.Migrations
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Type")
                         .IsRequired()

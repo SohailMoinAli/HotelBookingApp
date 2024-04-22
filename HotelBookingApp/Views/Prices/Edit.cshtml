@@ -3,26 +3,54 @@
 <h2>Edit Prices</h2>
 
 <form asp-action="Edit" asp-controller="Prices" method="post">
+    @Html.AntiForgeryToken() <!-- Ensures request comes from your site -->
+
     <h3>Room Prices</h3>
-    @for (int i = 0; i < Model.Rooms.Count; i++)
+    @if (Model.Rooms != null && Model.Rooms.Count > 0)
     {
-        <div>
-            <label asp-for="@Model.Rooms[i].Price">@Model.Rooms[i].Number - @Model.Rooms[i].Type</label>
-            <input asp-for="@Model.Rooms[i].Price" type="number" step="0.01" class="form-control" />
-        </div>
+        for (int i = 0; i < Model.Rooms.Count; i++)
+        {
+            <div>
+                <label asp-for="@Model.Rooms[i].Number">Room Number:</label>
+                <input asp-for="@Model.Rooms[i].Number" class="form-control" />
+
+                <label asp-for="@Model.Rooms[i].Type">Room Type:</label>
+                <input asp-for="@Model.Rooms[i].Type" class="form-control" />
+
+                <label asp-for="@Model.Rooms[i].Price">Price:</label>
+                <input asp-for="@Model.Rooms[i].Price" type="number" step="0.01" class="form-control" />
+
+                <input asp-for="@Model.Rooms[i].RoomId" type="hidden" />
+            </div>
+        }
+    }
+    else
+    {
+        <p>No rooms available for price editing.</p>
     }
 
     <h3>Additional Services Prices</h3>
-    @for (int j = 0; j < Model.AdditionalServicesList.Count; j++)
+    @if (Model.AdditionalServicesList != null && Model.AdditionalServicesList.Count > 0)
     {
-        <div>
-            <label asp-for="@Model.AdditionalServicesList[j].DinnerPrice">Dinner Reservation Price:</label>
-            <input asp-for="@Model.AdditionalServicesList[j].DinnerPrice" type="number" step="0.01" class="form-control" />
-            <label asp-for="@Model.AdditionalServicesList[j].TourPrice">Tour Booking Price:</label>
-            <input asp-for="@Model.AdditionalServicesList[j].TourPrice" type="number" step="0.01" class="form-control" />
-            <label asp-for="@Model.AdditionalServicesList[j].GolfPackagePrice">Golf Package Price:</label>
-            <input asp-for="@Model.AdditionalServicesList[j].GolfPackagePrice" type="number" step="0.01" class="form-control" />
-        </div>
+        for (int j = 0; j < Model.AdditionalServicesList.Count; j++)
+        {
+            <div>
+                <label asp-for="@Model.AdditionalServicesList[j].DinnerPrice">Dinner Reservation Price:</label>
+                <input asp-for="@Model.AdditionalServicesList[j].DinnerPrice" type="number" step="0.01" class="form-control" />
+
+                <label asp-for="@Model.AdditionalServicesList[j].TourPrice">Tour Booking Price:</label>
+                <input asp-for="@Model.AdditionalServicesList[j].TourPrice" type="number" step="0.01" class="form-control" />
+
+                <label asp-for="@Model.AdditionalServicesList[j].GolfPackagePrice">Golf Package Price:</label>
+                <input asp-for="@Model.AdditionalServicesList[j].GolfPackagePrice" type="number" step="0.01" class="form-control" />
+
+                <input asp-for="@Model.AdditionalServicesList[j].AdditionalBookingId" type="hidden" />
+            </div>
+        }
+    }
+    else
+    {
+        <p>No additional services available for price editing.</p>
     }
 
     <button type="submit" class="btn btn-primary">Update Prices</button>

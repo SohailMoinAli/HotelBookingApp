@@ -16,6 +16,25 @@ namespace HotelBookingApp.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Hotels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Latitude = table.Column<double>(type: "double", nullable: false),
+                    Longitude = table.Column<double>(type: "double", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hotels", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -25,7 +44,8 @@ namespace HotelBookingApp.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Type = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsAvailable = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    IsAvailable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +60,7 @@ namespace HotelBookingApp.Migrations
                     ReservationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoomId = table.Column<int>(type: "int", nullable: false),
-                    CustomerName = table.Column<string>(type: "longtext", nullable: false)
+                    CustomerName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CheckInDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CheckOutDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
@@ -66,7 +86,10 @@ namespace HotelBookingApp.Migrations
                     ReservationId = table.Column<int>(type: "int", nullable: false),
                     DinnerReservation = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TourBooking = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    GolfPackage = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    GolfPackage = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DinnerPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    TourPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    GolfPackagePrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,8 +106,7 @@ namespace HotelBookingApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AdditionalBookings_ReservationId",
                 table: "AdditionalBookings",
-                column: "ReservationId",
-                unique: true);
+                column: "ReservationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_RoomId",
@@ -97,6 +119,9 @@ namespace HotelBookingApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AdditionalBookings");
+
+            migrationBuilder.DropTable(
+                name: "Hotels");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
