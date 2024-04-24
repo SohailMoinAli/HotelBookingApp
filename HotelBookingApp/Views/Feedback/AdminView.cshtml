@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HotelBookingApp.Models.Feedback>
+
+<h2>Feedback Received</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var feedback in Model)
+        {
+            <tr>
+                <td>@feedback.Name</td>
+                <td>@feedback.Email</td>
+                <td>@feedback.Message</td>
+                <td>
+                    <!-- Example action buttons -->
+                    <a asp-action="Delete" asp-route-id="@feedback.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
