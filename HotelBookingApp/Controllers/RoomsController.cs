@@ -63,6 +63,7 @@ public class RoomsController : Controller
             RoomId = room.RoomId,
             Number = room.Number,
             Type = room.Type,
+            Price = room.Price,
             IsAvailable = room.IsAvailable
         };
         return View(roomViewModel);
@@ -92,6 +93,7 @@ public class RoomsController : Controller
         room.Number = model.Number;
         room.Type = model.Type;
         room.IsAvailable = model.IsAvailable;
+        room.Price = model.Price;
         _context.Update(room);
         await _context.SaveChangesAsync();
 
@@ -160,6 +162,36 @@ public class RoomsController : Controller
         }
 
         return View(reservation);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AdditionalReservations(Reservation reservationModel)
+    {
+        var reservation = await _context.Reservations
+            .Include(r => r.AdditionalBookings)
+            .FirstOrDefaultAsync(r => r.ReservationId == reservationModel.ReservationId);
+
+        if (reservation == null)
+        {
+            return NotFound("Reservation not found.");
+        }
+
+        // Update additional bookings based on the form submission
+        foreach (var booking in reservation.AdditionalBookings)
+        {
+            var formBooking = reservationModel.AdditionalBookings.FirstOrDefault(ab => ab.AdditionalBookingId == booking.AdditionalBookingId);
+            if (formBooking != null)
+            {
+                booking.DinnerReservation = formBooking.DinnerReservation;
+                booking.TourBooking = formBooking.TourBooking;
+                booking.GolfPackage = formBooking.GolfPackage;
+            }
+        }
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("BookingConfirmation", new { reservationId = reservation.ReservationId });
     }
 
     // Final booking confirmation after selecting additional services

@@ -26,11 +26,8 @@ namespace HotelBookingApp.Models
         [DataType(DataType.Date)]
         public DateTime CheckOutDate { get; set; }
 
-        public ICollection<AdditionalBooking> AdditionalBookings { get; set; }
+        public decimal TotalPrice { get; set; }
+        public List<AdditionalBooking>? AdditionalBookings { get; set; }
 
-        public Reservation()
-        {
-            AdditionalBookings = new HashSet<AdditionalBooking>();
-        }
     }
 }

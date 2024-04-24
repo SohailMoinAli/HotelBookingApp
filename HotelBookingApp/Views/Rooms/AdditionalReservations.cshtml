@@ -1,11 +1,12 @@
-﻿@model HotelBookingApp.Models.Reservation
+﻿@* @model HotelBookingApp.Models.Reservation
 
 <h2>Additional Reservations for Booking #@Model.ReservationId</h2>
 
 @if (Model.AdditionalBookings != null && Model.AdditionalBookings.Any())
 {
-    <form asp-action="BookingConfirmation" asp-controller="Rooms" method="post">
+    <form asp-action="AdditionalReservations" asp-controller="Rooms" method="post">
         <input type="hidden" asp-for="ReservationId" />
+
 
         <div>
             <h4>Select additional services:</h4>
@@ -15,9 +16,40 @@
                     <input asp-for="@booking.DinnerReservation" type="checkbox" /> Dinner Reservation<br />
                     <input asp-for="@booking.TourBooking" type="checkbox" /> Book a Tour<br />
                     <input asp-for="@booking.GolfPackage" type="checkbox" /> Golf Package<br />
+                    
                 </div>
             }
         </div>
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+
+    
+}
+else
+{
+    <p>No additional services are available for selection.</p>
+} *@
+
+
+@model HotelBookingApp.Models.Reservation
+
+<h2>Additional Reservations for Booking #@Model.ReservationId</h2>
+
+@if (Model.AdditionalBookings != null && Model.AdditionalBookings.Any())
+{
+    <form asp-action="AdditionalReservations" asp-controller="Rooms" method="post">
+        <input type="hidden" asp-for="ReservationId" />
+
+        @for (int i = 0; i < Model.AdditionalBookings.Count; i++)
+        {
+            <div>
+                <input type="hidden" asp-for="@Model.AdditionalBookings[i].AdditionalBookingId" />
+                <input asp-for="@Model.AdditionalBookings[i].DinnerReservation" type="checkbox" /> Dinner Reservation<br />
+                <input asp-for="@Model.AdditionalBookings[i].TourBooking" type="checkbox" /> Book a Tour<br />
+                <input asp-for="@Model.AdditionalBookings[i].GolfPackage" type="checkbox" /> Golf Package<br />
+            </div>
+        }
+
         <button type="submit" class="btn btn-primary">Confirm Booking</button>
     </form>
 }
