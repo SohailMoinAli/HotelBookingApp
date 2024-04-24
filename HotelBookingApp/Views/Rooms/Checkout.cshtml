@@ -1,0 +1,16 @@
+﻿@model HotelBookingApp.Models.Reservation
+
+<h2>Checkout</h2>
+<div>
+    <p>Reservation ID: @Model.ReservationId</p>
+    <p>Room Number: @Model.Room.Number</p>
+    <p>Check-in Date: @Model.CheckInDate.ToShortDateString()</p>
+    <p>Check-out Date: @Model.CheckOutDate.ToShortDateString()</p>
+    <p>Total Cost: $@Model.TotalPrice.ToString("N2")</p>
+    <p>Status: @Model.Status</p>
+</div>
+
+<form asp-action="FinalizeBooking" asp-controller="Rooms" method="post">
+    <input type="hidden" name="reservationId" value="@Model.ReservationId" />
+    <button type="submit">Confirm and Pay</button>
+</form>

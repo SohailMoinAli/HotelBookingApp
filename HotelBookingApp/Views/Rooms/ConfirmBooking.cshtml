@@ -1,0 +1,22 @@
+﻿@model dynamic
+
+<h2>Confirm Your Booking</h2>
+
+<div>
+    <p>Room Number: @Model.RoomNumber</p>
+    <p>Type: @Model.RoomType</p>
+    <p>Price per Night: $@((Model.TotalPrice / Model.TotalNights).ToString("F2"))</p>
+    <p>Check-in Date: @Model.CheckInDate.ToShortDateString()</p>
+    <p>Check-out Date: @Model.CheckOutDate.ToShortDateString()</p>
+    <p>Total Nights: @Model.TotalNights</p>
+    <p>Total Cost: $@Model.TotalPrice.ToString("F2")</p>
+</div>
+
+<form asp-action="ProceedToCheckout" asp-controller="Rooms" method="post">
+    <input type="hidden" name="roomId" value="@Model.RoomId" />
+    <input type="hidden" name="checkInDate" value="@Model.CheckInDate" />
+    <input type="hidden" name="checkOutDate" value="@Model.CheckOutDate" />
+    <input type="hidden" name="totalPrice" value="@Model.TotalPrice" />
+    <input type="hidden" name="customerName" value="@Model.CustomerName" />
+    <input type="submit" value="Proceed to Checkout" />
+</form>

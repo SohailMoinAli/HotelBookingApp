@@ -27,6 +27,7 @@ namespace HotelBookingApp.Models
         public DateTime CheckOutDate { get; set; }
 
         public decimal TotalPrice { get; set; }
+        public string Status { get; set; } = "Pending";
         public List<AdditionalBooking>? AdditionalBookings { get; set; }
 
     }

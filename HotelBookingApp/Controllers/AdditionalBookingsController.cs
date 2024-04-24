@@ -16,18 +16,18 @@ public class AdditionalBookingsController : Controller
         return View(model);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(AdditionalBooking additionalBooking)
-    {
-        if (!ModelState.IsValid)
-        {
-            ViewBag.ReservationId = additionalBooking.ReservationId;
-            return View(additionalBooking);
-        }
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Create(AdditionalBooking additionalBooking)
+    //{
+    //    if (!ModelState.IsValid)
+    //    {
+    //        ViewBag.ReservationId = additionalBooking.ReservationId;
+    //        return View(additionalBooking);
+    //    }
 
-        _context.AdditionalBookings.Add(additionalBooking);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Confirmation", "Reservations", new { reservationId = additionalBooking.ReservationId });
-    }
+    //    _context.AdditionalBookings.Add(additionalBooking);
+    //    await _context.SaveChangesAsync();
+    //    return RedirectToAction("Confirmation", "Reservations", new { reservationId = additionalBooking.ReservationId });
+    //}
 }

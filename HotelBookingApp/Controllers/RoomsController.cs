@@ -99,15 +99,13 @@ public class RoomsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    // Displays available rooms to book
     public async Task<IActionResult> BookARoom()
     {
         var availableRooms = await _context.Rooms.Where(r => r.IsAvailable).ToListAsync();
         return View("BookARoom", availableRooms);
     }
 
-    // Handles room booking and redirects to additional reservations
+    // Displays available rooms to book
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> BookARoom(int roomId, DateTime checkInDate, DateTime checkOutDate)
@@ -118,23 +116,27 @@ public class RoomsController : Controller
             return NotFound("Room not available.");
         }
 
+        // Calculate the number of nights and total price
+        int totalNights = (checkOutDate - checkInDate).Days;
+        decimal totalPrice = totalNights * room.Price;  // Assumes room.Price is the cost per night
+
         var customerName = User.Identity.IsAuthenticated ? User.Identity.Name : "Guest Customer";
 
-        var reservation = new Reservation
+        // Create a reservation object to pass to the confirmation view
+        var reservation = new
         {
             RoomId = roomId,
+            RoomNumber = room.Number,
+            RoomType = room.Type,
             CheckInDate = checkInDate,
             CheckOutDate = checkOutDate,
-            CustomerName = customerName,
-            AdditionalBookings = new List<AdditionalBooking>()
+            TotalNights = totalNights,
+            TotalPrice = totalPrice,
+            CustomerName = customerName
         };
 
-        _context.Reservations.Add(reservation);
-        room.IsAvailable = false; // Optionally leave room as available until final confirmation if needed
-        await _context.SaveChangesAsync();
-
-        // Redirect to the page for additional reservations
-        return RedirectToAction("AdditionalReservations", new { reservationId = reservation.ReservationId });
+        // Pass reservation details to the confirmation view
+        return View("ConfirmBooking", reservation);
     }
 
     // Shows form for additional reservations
@@ -209,4 +211,88 @@ public class RoomsController : Controller
 
         return View(reservation);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ProceedToCheckout(int roomId, DateTime checkInDate, DateTime checkOutDate, decimal totalPrice, string customerName)
+    {
+        var room = await _context.Rooms.FirstOrDefaultAsync(r => r.RoomId == roomId);
+        if (room == null || !room.IsAvailable)
+        {
+            return NotFound("Room not available.");
+        }
+
+        // Mark the room as unavailable
+        room.IsAvailable = false;
+
+        var reservation = new Reservation
+        {
+            RoomId = roomId,
+            CheckInDate = checkInDate,
+            CheckOutDate = checkOutDate,
+            CustomerName = customerName,
+            TotalPrice = totalPrice,
+            Status = "Pending Payment"
+        };
+
+        _context.Reservations.Add(reservation);
+        await _context.SaveChangesAsync();
+
+        // Redirect to a dummy checkout view with the reservation ID
+        return RedirectToAction("Checkout", new { reservationId = reservation.ReservationId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> FinalizeBooking(int reservationId)
+    {
+        var reservation = await _context.Reservations.FirstOrDefaultAsync(r => r.ReservationId == reservationId);
+        if (reservation == null)
+        {
+            return NotFound("Reservation not found.");
+        }
+
+        // Finalize the reservation
+        reservation.Status = "Confirmed";
+        await _context.SaveChangesAsync();
+
+        // Redirect to a confirmation view or similar
+        return RedirectToAction("ReservationComplete", new { reservationId = reservation.ReservationId });
+    }
+
+    public async Task<IActionResult> ReservationComplete(int reservationId)
+    {
+        var reservation = await _context.Reservations
+            .Include(r => r.Room) // Load room information if needed for display
+            .FirstOrDefaultAsync(r => r.ReservationId == reservationId);
+
+        if (reservation == null)
+        {
+            return NotFound("The reservation could not be found.");
+        }
+
+        // Ensure the reservation is actually confirmed before showing the complete view
+        if (reservation.Status != "Confirmed")
+        {
+            return RedirectToAction("Error", new { message = "Reservation is not confirmed yet." });
+        }
+
+        return View(reservation);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Checkout(int reservationId)
+    {
+        var reservation = await _context.Reservations
+            .Include(r => r.Room)
+            .FirstOrDefaultAsync(r => r.ReservationId == reservationId);
+
+        if (reservation == null)
+        {
+            return NotFound("Reservation not found.");
+        }
+
+        return View(reservation);  // Make sure you have a Checkout.cshtml view ready in the correct view folder
+    }
+
 }
