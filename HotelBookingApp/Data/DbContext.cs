@@ -10,4 +10,7 @@ public class HotelDbContext : DbContext
     public DbSet<AdditionalBooking> AdditionalBookings { get; set; }
     public DbSet<Hotel> Hotels { get; set; }  
     public DbSet<Feedback> Feedbacks { get; set; }
+
+    public DbSet<SpecialOffer> SpecialOffers { get; set; }
+    public DbSet<SpecialBooking> SpecialBookings { get; set; }
 }

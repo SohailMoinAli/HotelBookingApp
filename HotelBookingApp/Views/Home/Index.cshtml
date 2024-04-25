@@ -1,14 +1,74 @@
-﻿@{
+﻿@model IEnumerable<HotelBookingApp.Models.SpecialOffer>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Our Hotel Booking Platform</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - USP Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <!-- Button to Book a Room -->
+        <a href="@Url.Action("BookARoom", "Rooms")" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4">Book a Room</a>
+    </div>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Cards Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Special Offer Card (only shown if there are offers) -->
+            @if (Model != null && Model.Any())
+            {
+                foreach (var offer in Model)
+                {
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img class="w-full h-64 object-cover" src="images/special.jpg" alt="Special Offer">
+                        <div class="p-4">
+                            <h2 class="font-bold text-xl mb-2">@offer.Name</h2>
+                            <p>@offer.Description</p>
+                            <p>Price: @offer.Price.ToString("C")</p>
+                            <a href="@Url.Action("BookSpecial", "SpecialBooking", new { offerId = offer.Id })" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Book Now</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <!-- This section ensures that no cards are displayed if there are no special offers -->
+            }
 
-    <!-- Display database connection status -->
-    <p>Database Connection Status: @ViewData["DbConnected"]</p>
-
-    <!-- Button to Book a Room -->
-    <a class="btn btn-primary" asp-controller="Rooms" asp-action="BookARoom">Book a Room</a>
-</div>
+            <!-- Additional Cards for hotel features -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img class="w-full h-64 object-cover" src="images/hotelout.jpg" alt="Exterior view of hotel with pool">
+                <div class="p-4">
+                    <h2 class="font-bold text-xl mb-2">Exterior View</h2>
+                    <p>Enjoy the luxurious outdoor pool and the scenic hotel surroundings.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img class="w-full h-64 object-cover" src="images/happy.jpg" alt="Happy guest smiling">
+                <div class="p-4">
+                    <h2 class="font-bold text-xl mb-2">Happy Guests</h2>
+                    <p>Our guests leave with smiles. Join us and experience bliss.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img class="w-full h-64 object-cover" src="images/hotel.jpg" alt="Hotel room interior">
+                <div class="p-4">
+                    <h2 class="font-bold text-xl mb-2">Room Interior</h2>
+                    <p>Each room is a haven of comfort with modern amenities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

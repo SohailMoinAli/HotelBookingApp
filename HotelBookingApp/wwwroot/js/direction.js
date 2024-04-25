@@ -1,30 +1,31 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const hotelLat = 40.7128; // Change these coordinates to your hotel's actual coordinates
-    const hotelLng = -74.0060;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('map').setView([51.505, -0.09], 13); // Set the initial position and zoom level
 
-    const map = L.map('map').setView([hotelLat, hotelLng], 13);
+    // Load and display the base layer of the map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+        maxZoom: 19,
+    attribution: '© OpenStreetMap'
+        }).addTo(map);
 
-    // Marker for the central hotel
-    const hotelMarker = L.marker([hotelLat, hotelLng]).addTo(map);
-    hotelMarker.bindPopup("<b>Your Hotel Name Here</b><br>Address here").openPopup();
+    // Function to add markers to the map
+    function addMarkers(hotels) {
+        hotels.forEach(function (hotel) {
+            var marker = L.marker([hotel.Latitude, hotel.Longitude]).addTo(map);
+            marker.bindPopup('<strong>' + hotel.Name + '</strong><br>' + hotel.Description);
+        });
+        }
 
-    // Fetch and display other hotels from the server
+    // Fetch the hotel data from your controller
     fetch('/Maps/GetHotels')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok ' + response.statusText);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Hotel data:', data); // Debugging line to check what data is received
-            data.forEach(hotel => {
-                if (hotel.latitude !== hotelLat && hotel.longitude !== hotelLng) {
-                    L.marker([hotel.latitude, hotel.longitude]).addTo(map)
-                        .bindPopup(`<b>${hotel.name}</b><br/>${hotel.description}`);
-                }
+    .then(function(response) {
+                return response.json();
+            })
+    .then(function(hotels) {
+        addMarkers(hotels); // Add markers after data is loaded
+            })
+    .catch(function(error) {
+        console.error('Error loading the hotel data:', error);
             });
-        })
-        .catch(error => console.error('Failed to fetch hotel data:', error));
-});
+    });
+</script>

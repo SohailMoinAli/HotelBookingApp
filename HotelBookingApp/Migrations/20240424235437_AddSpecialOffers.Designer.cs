@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424235437_AddSpecialOffers")]
+    partial class AddSpecialOffers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,30 +175,6 @@ namespace HotelBookingApp.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("HotelBookingApp.Models.SpecialBooking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookingDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("NumberOfGuests")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialOfferId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SpecialOfferId");
-
-                    b.ToTable("SpecialBookings");
-                });
-
             modelBuilder.Entity("HotelBookingApp.Models.SpecialOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -218,6 +197,9 @@ namespace HotelBookingApp.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ValidFrom")
                         .HasColumnType("datetime(6)");
 
@@ -225,6 +207,8 @@ namespace HotelBookingApp.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("SpecialOffers");
                 });
@@ -251,15 +235,15 @@ namespace HotelBookingApp.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HotelBookingApp.Models.SpecialBooking", b =>
+            modelBuilder.Entity("HotelBookingApp.Models.SpecialOffer", b =>
                 {
-                    b.HasOne("HotelBookingApp.Models.SpecialOffer", "SpecialOffer")
+                    b.HasOne("HotelBookingApp.Models.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("SpecialOfferId")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SpecialOffer");
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.Reservation", b =>

@@ -11,10 +11,40 @@
         }
     </style>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="/js/directions.js" defer></script> <!-- Ensure your script is deferred or placed after the body -->
 </head>
 <body>
     <input id="start" type="text" placeholder="Enter starting location">
     <div id="map"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the initial position and zoom level to New York (assuming most hotels are near this area)
+            var map = L.map('map').setView([40.712776, -74.005974], 13);
+
+            // Load and display the base layer of the map from OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // Fetch the hotel data from your controller
+            fetch('/Maps/GetHotels')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (hotels) {
+                    // Add markers to the map for each hotel
+                    hotels.forEach(function (hotel) {
+                        if (hotel.Latitude && hotel.Longitude) { // Ensure the latitude and longitude are not null
+                            var marker = L.marker([hotel.Latitude, hotel.Longitude]).addTo(map);
+                            marker.bindPopup('<strong>' + hotel.Name + '</strong><br>' + hotel.Description);
+                        }
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error loading the hotel data:', error);
+                });
+        });
+    </script>
 </body>
 </html>

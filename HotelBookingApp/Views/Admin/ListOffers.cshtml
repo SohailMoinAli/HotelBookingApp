@@ -1,0 +1,32 @@
+﻿@model IEnumerable<HotelBookingApp.Models.SpecialOffer>
+
+<h2>Special Offers</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Valid From</th>
+            <th>Valid Until</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var offer in Model)
+        {
+            <tr>
+                <td>@offer.Name</td>
+                <td>@offer.Description</td>
+                <td>@offer.Price</td>
+                <td>@offer.ValidFrom.ToShortDateString()</td>
+                <td>@offer.ValidUntil.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("EditOffer", "Admin", new { id = offer.Id })">Edit</a> |
+                    <a href="@Url.Action("DeleteOffer", "Admin", new { id = offer.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,22 +1,39 @@
-﻿@model dynamic
-
-<h2>Confirm Your Booking</h2>
-
-<div>
-    <p>Room Number: @Model.RoomNumber</p>
-    <p>Type: @Model.RoomType</p>
-    <p>Price per Night: $@((Model.TotalPrice / Model.TotalNights).ToString("F2"))</p>
-    <p>Check-in Date: @Model.CheckInDate.ToShortDateString()</p>
-    <p>Check-out Date: @Model.CheckOutDate.ToShortDateString()</p>
-    <p>Total Nights: @Model.TotalNights</p>
-    <p>Total Cost: $@Model.TotalPrice.ToString("F2")</p>
-</div>
-
-<form asp-action="ProceedToCheckout" asp-controller="Rooms" method="post">
-    <input type="hidden" name="roomId" value="@Model.RoomId" />
-    <input type="hidden" name="checkInDate" value="@Model.CheckInDate" />
-    <input type="hidden" name="checkOutDate" value="@Model.CheckOutDate" />
-    <input type="hidden" name="totalPrice" value="@Model.TotalPrice" />
-    <input type="hidden" name="customerName" value="@Model.CustomerName" />
-    <input type="submit" value="Proceed to Checkout" />
-</form>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Booking - USP Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full p-8">
+            <h2 class="font-bold text-2xl mb-4 text-center">Confirm Your Booking</h2>
+            <div>
+                <p>Room Number: @Model.RoomNumber</p>
+                <p>Type: @Model.RoomType</p>
+                <p>Price per Night: $@((Model.TotalPrice / Model.TotalNights).ToString("F2"))</p>
+                <p>Check-in Date: @Model.CheckInDate.ToShortDateString()</p>
+                <p>Check-out Date: @Model.CheckOutDate.ToShortDateString()</p>
+                <p>Total Nights: @Model.TotalNights</p>
+                <p>Total Cost: $@Model.TotalPrice.ToString("F2")</p>
+            </div>
+            <form asp-action="ProceedToCheckout" asp-controller="Rooms" method="post" class="mt-4">
+                <input type="hidden" name="roomId" value="@Model.RoomId" />
+                <input type="hidden" name="checkInDate" value="@Model.CheckInDate" />
+                <input type="hidden" name="checkOutDate" value="@Model.CheckOutDate" />
+                <input type="hidden" name="totalPrice" value="@Model.TotalPrice" />
+                <input type="hidden" name="customerName" value="@Model.CustomerName" />
+                <input type="submit" value="Proceed to Checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,9 +4,9 @@ using HotelBookingApp.Models;
 
 public class MapsController : Controller
 {
-    private readonly HotelDbContext _context;  // Change DbContext to HotelDbContext
+    private readonly HotelDbContext _context;
 
-    public MapsController(HotelDbContext context)  // Constructor should take HotelDbContext
+    public MapsController(HotelDbContext context)
     {
         _context = context;
     }

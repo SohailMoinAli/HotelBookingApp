@@ -1,0 +1,35 @@
+﻿@model HotelBookingApp.Models.SpecialBooking
+
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Confirmation Details</h2>
+            <p class="card-text">Thank you for booking with us. Here are the details of your booking:</p>
+
+            <dl class="row">
+                <dt class="col-sm-3">Booking ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Special Offer ID</dt>
+                <dd class="col-sm-9">@Model.SpecialOfferId</dd>
+
+                <dt class="col-sm-3">Booking Date</dt>
+                <dd class="col-sm-9">@Model.BookingDate.ToString("dd MMMM yyyy")</dd>
+
+                <dt class="col-sm-3">Number of Guests</dt>
+                <dd class="col-sm-9">@Model.NumberOfGuests</dd>
+
+                <!-- Additional details can be added here -->
+            </dl>
+
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Return to Home</a>
+            </div>
+        </div>
+    </div>
+</div>

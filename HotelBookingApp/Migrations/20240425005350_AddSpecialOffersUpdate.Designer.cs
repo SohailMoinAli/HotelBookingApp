@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425005350_AddSpecialOffersUpdate")]
+    partial class AddSpecialOffersUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,30 +175,6 @@ namespace HotelBookingApp.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("HotelBookingApp.Models.SpecialBooking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookingDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("NumberOfGuests")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialOfferId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SpecialOfferId");
-
-                    b.ToTable("SpecialBookings");
-                });
-
             modelBuilder.Entity("HotelBookingApp.Models.SpecialOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -207,9 +186,6 @@ namespace HotelBookingApp.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -249,17 +225,6 @@ namespace HotelBookingApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.SpecialBooking", b =>
-                {
-                    b.HasOne("HotelBookingApp.Models.SpecialOffer", "SpecialOffer")
-                        .WithMany()
-                        .HasForeignKey("SpecialOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SpecialOffer");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.Reservation", b =>

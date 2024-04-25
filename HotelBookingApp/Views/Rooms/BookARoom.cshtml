@@ -1,48 +1,65 @@
-﻿@model IEnumerable<HotelBookingApp.Models.Room>
-
-<h2>Book a Room</h2>
-
-<ul>
-    @foreach (var room in Model)
-    {
-        <li>
-            Room Number: @room.Number, Type: @room.Type, Price: $@room.Price.ToString("F2")
-            <form asp-action="BookARoom" asp-controller="Rooms" method="post">
-                <input type="hidden" name="roomId" value="@room.RoomId" />
-                <input type="date" name="checkInDate" class="date-input" data-room-id="@room.RoomId" data-price="@room.Price" required placeholder="Check-in Date" />
-                <input type="date" name="checkOutDate" class="date-input" data-room-id="@room.RoomId" required placeholder="Check-out Date" />
-                <div id="duration-@room.RoomId">Duration: 0 Nights</div>
-                @* <div id="total-price-@room.RoomId">Total Price: $0.00</div> *@
-                <input type="submit" value="Book Now" />
-            </form>
-        </li>
-    }
-</ul>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var dateInputs = document.querySelectorAll('.date-input');
-        dateInputs.forEach(function (input) {
-            input.addEventListener('change', function () {
-                var roomId = this.dataset.roomId;
-                var pricePerNight = parseFloat(this.dataset.price);
-                var checkInInput = document.querySelector('input[name="checkInDate"][data-room-id="' + roomId + '"]');
-                var checkOutInput = document.querySelector('input[name="checkOutDate"][data-room-id="' + roomId + '"]');
-
-                if (checkInInput.value && checkOutInput.value) {
-                    var checkInDate = new Date(checkInInput.value);
-                    var checkOutDate = new Date(checkOutInput.value);
-                    var duration = Math.round((checkOutDate - checkInDate) / (1000 * 3600 * 24)); // Difference in days
-
-                    if (duration > 0) {
-                        document.getElementById('duration-' + roomId).innerText = 'Duration: ' + duration + ' Nights';
-                        document.getElementById('total-price-' + roomId).innerText = 'Total Price: $' + (pricePerNight * duration).toFixed(2);
-                    } else {
-                        document.getElementById('duration-' + roomId).innerText = 'Duration: 0 Nights';
-                        document.getElementById('total-price-' + roomId).innerText = 'Total Price: $0.00';
-                    }
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Room - USP Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full p-8">
+            <h2 class="font-bold text-2xl mb-4 text-center">Book a Room</h2>
+            <ul>
+                @foreach (var room in Model)
+                {
+                    <li class="border-b border-gray-200 mb-4 pb-4">
+                        Room Number: @room.Number, Type: @room.Type, Price: $@room.Price.ToString("F2")
+                        <form asp-action="BookARoom" asp-controller="Rooms" method="post" class="mt-4">
+                            <input type="hidden" name="roomId" value="@room.RoomId" />
+                            <input type="date" name="checkInDate" class="date-input p-2 border border-gray-300 rounded" data-room-id="@room.RoomId" data-price="@room.Price" required placeholder="Check-in Date" />
+                            <input type="date" name="checkOutDate" class="date-input p-2 border border-gray-300 rounded" data-room-id="@room.RoomId" required placeholder="Check-out Date" />
+                            <div id="duration-@room.RoomId" class="mt-2">Duration: 0 Nights</div>
+                            <input type="submit" value="Book Now" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 cursor-pointer" />
+                        </form>
+                    </li>
                 }
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dateInputs = document.querySelectorAll('.date-input');
+            dateInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    var roomId = this.dataset.roomId;
+                    var pricePerNight = parseFloat(this.dataset.price);
+                    var checkInInput = document.querySelector('input[name="checkInDate"][data-room-id="' + roomId + '"]');
+                    var checkOutInput = document.querySelector('input[name="checkOutDate"][data-room-id="' + roomId + '"]');
+
+                    if (checkInInput.value && checkOutInput.value) {
+                        var checkInDate = new Date(checkInInput.value);
+                        var checkOutDate = new Date(checkOutInput.value);
+                        var duration = Math.round((checkOutDate - checkInDate) / (1000 * 3600 * 24)); // Difference in days
+
+                        if (duration > 0) {
+                            document.getElementById('duration-' + roomId).innerText = 'Duration: ' + duration + ' Nights';
+                            document.getElementById('total-price-' + roomId).innerText = 'Total Price: $' + (pricePerNight * duration).toFixed(2);
+                        } else {
+                            document.getElementById('duration-' + roomId).innerText = 'Duration: 0 Nights';
+                            document.getElementById('total-price-' + roomId).innerText = 'Total Price: $0.00';
+                        }
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
