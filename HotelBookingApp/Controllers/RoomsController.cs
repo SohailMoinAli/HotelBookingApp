@@ -99,26 +99,63 @@ public class RoomsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-    public async Task<IActionResult> BookARoom()
+    public async Task<IActionResult> RoomIndex()
     {
         var availableRooms = await _context.Rooms.Where(r => r.IsAvailable).ToListAsync();
-        return View("BookARoom", availableRooms);
+        return View("RoomIndex", availableRooms);
     }
+    public async Task<IActionResult> BookARoom(int roomId)
+    {
+        var room = await _context.Rooms.FindAsync(roomId);
+        if (room == null)
+        {
+            return NotFound("Room not found.");
+        }
+
+        if (!room.IsAvailable)
+        {
+            return BadRequest("Room is not available for booking.");
+        }
+
+        return View(room);
+    }
+
 
     // Displays available rooms to book
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> BookARoom(int roomId, DateTime checkInDate, DateTime checkOutDate)
     {
+        Console.WriteLine($"Received roomId: {roomId}, checkInDate: {checkInDate}, checkOutDate: {checkOutDate}");
         var room = await _context.Rooms.FirstOrDefaultAsync(r => r.RoomId == roomId && r.IsAvailable);
         if (room == null)
         {
             return NotFound("Room not available.");
         }
 
+        // Check ModelState.IsValid
+        if (!ModelState.IsValid)
+        {
+            // Log ModelState errors to diagnose validation issues
+            Console.WriteLine("ModelState is invalid:");
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+
         // Calculate the number of nights and total price
         int totalNights = (checkOutDate - checkInDate).Days;
-        decimal totalPrice = totalNights * room.Price;  // Assumes room.Price is the cost per night
+        if (totalNights <= 0)
+        {
+            totalNights = 0;  // Ensure totalNights is not negative or zero
+        }
+        decimal totalPrice = totalNights * room.Price;
 
         var customerName = User.Identity.IsAuthenticated ? User.Identity.Name : "Guest Customer";
 

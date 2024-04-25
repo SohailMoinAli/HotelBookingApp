@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Room - USP Hotel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             background-color: #f5f5dc; /* Soft cream color */
@@ -13,53 +14,53 @@
     </style>
 </head>
 <body>
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full p-8">
-            <h2 class="font-bold text-2xl mb-4 text-center">Book a Room</h2>
-            <ul>
-                @foreach (var room in Model)
-                {
-                    <li class="border-b border-gray-200 mb-4 pb-4">
-                        Room Number: @room.Number, Type: @room.Type, Price: $@room.Price.ToString("F2")
-                        <form asp-action="BookARoom" asp-controller="Rooms" method="post" class="mt-4">
-                            <input type="hidden" name="roomId" value="@room.RoomId" />
-                            <input type="date" name="checkInDate" class="date-input p-2 border border-gray-300 rounded" data-room-id="@room.RoomId" data-price="@room.Price" required placeholder="Check-in Date" />
-                            <input type="date" name="checkOutDate" class="date-input p-2 border border-gray-300 rounded" data-room-id="@room.RoomId" required placeholder="Check-out Date" />
-                            <div id="duration-@room.RoomId" class="mt-2">Duration: 0 Nights</div>
-                            <input type="submit" value="Book Now" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 cursor-pointer" />
-                        </form>
-                    </li>
-                }
-            </ul>
+    @using (Html.BeginForm("BookARoom", "Rooms", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="flex justify-center items-center min-h-screen">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full p-8">
+                <h2 class="font-bold text-2xl mb-4 text-center">Book a Room</h2>
+                <form id="bookingForm" action="/Rooms/BookARoom" method="post">
+                    <div id="roomDetails">
+                        <h3>Room Number: @Model.Number</h3>
+                        <p>Type: @Model.Type</p>
+                        <p>Price: $@Model.Price.ToString("F2")</p>
+                        <div>
+                            Check-In Date: <input type="date" name="checkInDate" id="checkInDate" class="date-input p-2 border border-gray-300 rounded" required />
+                        </div>
+                        <div>
+                            Check-Out Date: <input type="date" name="checkOutDate" id="checkOutDate" class="date-input p-2 border border-gray-300 rounded" required />
+                        </div>
+                        <div id="duration">Duration: 0 Nights</div>
+                        <input type="hidden" name="roomId" value="@Model.RoomId" />
+                        <button type="submit" id="bookNowBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Book Now</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    }
 
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var dateInputs = document.querySelectorAll('.date-input');
-            dateInputs.forEach(function (input) {
-                input.addEventListener('change', function () {
-                    var roomId = this.dataset.roomId;
-                    var pricePerNight = parseFloat(this.dataset.price);
-                    var checkInInput = document.querySelector('input[name="checkInDate"][data-room-id="' + roomId + '"]');
-                    var checkOutInput = document.querySelector('input[name="checkOutDate"][data-room-id="' + roomId + '"]');
-
-                    if (checkInInput.value && checkOutInput.value) {
-                        var checkInDate = new Date(checkInInput.value);
-                        var checkOutDate = new Date(checkOutInput.value);
-                        var duration = Math.round((checkOutDate - checkInDate) / (1000 * 3600 * 24)); // Difference in days
-
-                        if (duration > 0) {
-                            document.getElementById('duration-' + roomId).innerText = 'Duration: ' + duration + ' Nights';
-                            document.getElementById('total-price-' + roomId).innerText = 'Total Price: $' + (pricePerNight * duration).toFixed(2);
-                        } else {
-                            document.getElementById('duration-' + roomId).innerText = 'Duration: 0 Nights';
-                            document.getElementById('total-price-' + roomId).innerText = 'Total Price: $0.00';
-                        }
-                    }
-                });
+        $(document).ready(function () {
+            // Event binding for date input changes
+            $('.date-input').on('change', function () {
+                var checkInDate = $('#checkInDate').val();
+                var checkOutDate = $('#checkOutDate').val();
+                if (checkInDate && checkOutDate) {
+                    var date1 = new Date(checkInDate);
+                    var date2 = new Date(checkOutDate);
+                    var timeDiff = date2.getTime() - date1.getTime();
+                    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    $('#duration').text('Duration: ' + daysDiff + ' Nights');
+                }
             });
         });
     </script>
 </body>
+
 </html>
+
+
