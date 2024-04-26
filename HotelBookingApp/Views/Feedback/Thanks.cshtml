@@ -2,6 +2,12 @@
     Layout = "_Layout";  // Assuming you have a layout file to include header, footer, etc.
 }
 
-<h1>Thank You!</h1>
-<p>Your feedback has been successfully submitted.</p>
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Return to Home</a>
+<div class="flex justify-center items-center min-h-screen">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-md w-full p-8 text-center">
+        <h1 class="font-bold text-2xl mb-4">Thank You!</h1>
+        <p class="mb-6">Your feedback has been successfully submitted.</p>
+        <a href="@Url.Action("Index", "Home")" class="inline-block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+            Return to Home
+        </a>
+    </div>
+</div>

@@ -4,32 +4,51 @@
     ViewData["Title"] = "Booking Confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title">Confirmation Details</h2>
-            <p class="card-text">Thank you for booking with us. Here are the details of your booking:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg">
+            <h1 class="text-2xl font-bold text-center mb-4">@ViewData["Title"]</h1>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-xl font-semibold">Confirmation Details</h2>
+                    <p>Thank you for booking with us. Here are the details of your booking:</p>
 
-            <dl class="row">
-                <dt class="col-sm-3">Booking ID</dt>
-                <dd class="col-sm-9">@Model.Id</dd>
+                    <dl class="mt-4">
+                        <dt class="font-medium">Booking ID:</dt>
+                        <dd class="mb-2">@Model.Id</dd>
 
-                <dt class="col-sm-3">Special Offer ID</dt>
-                <dd class="col-sm-9">@Model.SpecialOfferId</dd>
+                        <dt class="font-medium">Special Offer ID:</dt>
+                        <dd class="mb-2">@Model.SpecialOfferId</dd>
 
-                <dt class="col-sm-3">Booking Date</dt>
-                <dd class="col-sm-9">@Model.BookingDate.ToString("dd MMMM yyyy")</dd>
+                        <dt class="font-medium">Booking Date:</dt>
+                        <dd class="mb-2">@Model.BookingDate.ToString("dd MMMM yyyy")</dd>
 
-                <dt class="col-sm-3">Number of Guests</dt>
-                <dd class="col-sm-9">@Model.NumberOfGuests</dd>
+                        <dt class="font-medium">Number of Guests:</dt>
+                        <dd class="mb-2">@Model.NumberOfGuests</dd>
+                        <!-- Additional details can be added here -->
+                    </dl>
 
-                <!-- Additional details can be added here -->
-            </dl>
-
-            <div class="mt-4">
-                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Return to Home</a>
+                    <div class="mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Return to Home</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>

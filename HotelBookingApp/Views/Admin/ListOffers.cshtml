@@ -1,32 +1,54 @@
 ﻿@model IEnumerable<HotelBookingApp.Models.SpecialOffer>
 
-<h2>Special Offers</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Valid From</th>
-            <th>Valid Until</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var offer in Model)
-        {
-            <tr>
-                <td>@offer.Name</td>
-                <td>@offer.Description</td>
-                <td>@offer.Price</td>
-                <td>@offer.ValidFrom.ToShortDateString()</td>
-                <td>@offer.ValidUntil.ToShortDateString()</td>
-                <td>
-                    <a href="@Url.Action("EditOffer", "Admin", new { id = offer.Id })">Edit</a> |
-                    <a href="@Url.Action("DeleteOffer", "Admin", new { id = offer.Id })">Delete</a>
-                </td>
-            </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offers - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Consistent soft cream color background */
         }
-    </tbody>
-</table>
+    </style>
+</head>
+<body>
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full p-8">
+            <h2 class="font-bold text-2xl mb-4 text-center">Special Offers</h2>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price ($)</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid From</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid Until</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach (var offer in Model)
+                    {
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@offer.Name</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@offer.Description</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@offer.Price.ToString("F2")</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@offer.ValidFrom.ToShortDateString()</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@offer.ValidUntil.ToShortDateString()</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="@Url.Action("EditOffer", "Admin", new { id = offer.Id })" class="text-blue-600 hover:text-blue-800">Edit</a> |
+                                <a href="@Url.Action("DeleteOffer", "Admin", new { id = offer.Id })" class="text-red-600 hover:text-red-800">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+

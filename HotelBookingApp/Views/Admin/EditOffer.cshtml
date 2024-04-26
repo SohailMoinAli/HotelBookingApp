@@ -1,28 +1,50 @@
 ﻿@model HotelBookingApp.Models.SpecialOffer
 
-<h2>Edit Special Offer</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Special Offer - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Consistent soft cream color background */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-8">
+            <h2 class="font-bold text-2xl mb-4 text-center">Edit Special Offer</h2>
+            <form asp-action="EditOffer" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-4">
+                    <label asp-for="Name" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</label>
+                    <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Description" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</label>
+                    <textarea asp-for="Description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Price" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</label>
+                    <input asp-for="Price" type="number" step="0.01" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="ValidFrom" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid From</label>
+                    <input asp-for="ValidFrom" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="ValidUntil" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid Until</label>
+                    <input asp-for="ValidUntil" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Offer</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
 
-<form asp-action="EditOffer" method="post">
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" type="number" step="0.01" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ValidFrom"></label>
-        <input asp-for="ValidFrom" class="form-control" type="date" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ValidUntil"></label>
-        <input asp-for="ValidUntil" class="form-control" type="date" />
-    </div>
-    <button type="submit" class="btn btn-success">Update Offer</button>
-</form>

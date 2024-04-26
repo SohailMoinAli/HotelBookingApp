@@ -1,16 +1,38 @@
 ﻿@model HotelBookingApp.Models.Reservation
 
-<h2>Checkout</h2>
-<div>
-    <p>Reservation ID: @Model.ReservationId</p>
-    <p>Room Number: @Model.Room.Number</p>
-    <p>Check-in Date: @Model.CheckInDate.ToShortDateString()</p>
-    <p>Check-out Date: @Model.CheckOutDate.ToShortDateString()</p>
-    <p>Total Cost: $@Model.TotalPrice.ToString("N2")</p>
-    <p>Status: @Model.Status</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Checkout</h2>
+            <div>
+                <p class="mb-2">Reservation ID: <span class="font-semibold">@Model.ReservationId</span></p>
+                <p class="mb-2">Room Number: <span class="font-semibold">@Model.Room.Number</span></p>
+                <p class="mb-2">Check-in Date: <span class="font-semibold">@Model.CheckInDate.ToShortDateString()</span></p>
+                <p class="mb-2">Check-out Date: <span class="font-semibold">@Model.CheckOutDate.ToShortDateString()</span></p>
+                <p class="mb-2">Total Cost: <span class="font-semibold">$@Model.TotalPrice.ToString("N2")</span></p>
+                <p class="mb-2">Status: <span class="font-semibold">@Model.Status</span></p>
+            </div>
 
-<form asp-action="FinalizeBooking" asp-controller="Rooms" method="post">
-    <input type="hidden" name="reservationId" value="@Model.ReservationId" />
-    <button type="submit">Confirm and Pay</button>
-</form>
+            <form asp-action="FinalizeBooking" asp-controller="Rooms" method="post" class="mt-4">
+                <input type="hidden" name="reservationId" value="@Model.ReservationId" />
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Confirm and Pay</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

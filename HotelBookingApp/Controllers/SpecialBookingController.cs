@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HotelBookingApp.Models;
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 public class SpecialBookingController : Controller
 {
@@ -34,22 +36,30 @@ public class SpecialBookingController : Controller
         return View(model);
     }
 
-    // POST: Handle the booking submission
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> BookSpecial(SpecialBooking booking)
     {
-        _logger.LogInformation("Received booking attempt with SpecialOfferId: {SpecialOfferId}, BookingDate: {BookingDate}, NumberOfGuests: {NumberOfGuests}",
-                               booking.SpecialOfferId, booking.BookingDate, booking.NumberOfGuests);
+        _logger.LogInformation("Booking attempt: SpecialOfferId={SpecialOfferId}, Date={BookingDate}, Guests={NumberOfGuests}",
+            booking.SpecialOfferId, booking.BookingDate, booking.NumberOfGuests);
+
+        // Ensure the SpecialOffer exists
+        booking.SpecialOffer = await _context.SpecialOffers.FindAsync(booking.SpecialOfferId);
+        if (booking.SpecialOffer == null)
+        {
+            ModelState.AddModelError("SpecialOfferId", "The specified special offer does not exist.");
+        }
+
+        // Remove the erroneous ModelState error manually if it's known to be incorrect
+        ModelState.Remove("SpecialOffer");
 
         if (!ModelState.IsValid)
         {
-            _logger.LogWarning("Model state is invalid. Error details follow:");
             foreach (var entry in ModelState)
             {
                 foreach (var error in entry.Value.Errors)
                 {
-                    _logger.LogWarning("{FieldName} - Error: {ErrorMessage}", entry.Key, error.ErrorMessage);
+                    _logger.LogWarning("Validation error - Field: {FieldName}, Error: {ErrorMessage}", entry.Key, error.ErrorMessage);
                 }
             }
             return View(booking);
@@ -59,21 +69,24 @@ public class SpecialBookingController : Controller
         try
         {
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Booking saved successfully with ID: {BookingId}", booking.Id);
             return RedirectToAction("ConfirmationSpecial", new { id = booking.Id });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error saving booking to the database.");
+            _logger.LogError(ex, "Error saving booking.");
             ModelState.AddModelError("", "An error occurred while saving the booking.");
             return View(booking);
         }
     }
 
+
     // GET: Show confirmation details after booking
     public async Task<IActionResult> ConfirmationSpecial(int id)
     {
-        var booking = await _context.SpecialBookings.FindAsync(id);
+        var booking = await _context.SpecialBookings
+            .Include(b => b.SpecialOffer) // Ensure the SpecialOffer data is loaded for display
+            .FirstOrDefaultAsync(b => b.Id == id);
+
         if (booking == null)
         {
             _logger.LogWarning("Booking with ID {BookingId} not found for confirmation.", id);

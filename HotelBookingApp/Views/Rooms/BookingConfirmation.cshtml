@@ -1,13 +1,68 @@
 ﻿@model HotelBookingApp.Models.Reservation
 
-<h2>Booking Confirmation</h2>
-<p>Thank you, @Model.CustomerName. Your booking for Room @Model.Room.Number is confirmed.</p>
-<p>Additional Services:</p>
-<ul>
-    @foreach (var booking in Model.AdditionalBookings)
-    {
-        <li>Dinner Reservation: @(booking.DinnerReservation ? "Yes" : "No")</li>
-        <li>Tour Booking: @(booking.TourBooking ? "Yes" : "No")</li>
-        <li>Golf Package: @(booking.GolfPackage ? "Yes" : "No")</li>
-    }
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Booking Confirmation</h2>
+            <p class="mb-4">Thank you, <span class="font-semibold">@Model.CustomerName</span>. Your booking for Room <span class="font-semibold">@Model.Room.Number</span> is confirmed.</p>
+            <p class="mb-2">Additional Services:</p>
+            <ul class="list-disc pl-4">
+                @foreach (var booking in Model.AdditionalBookings)
+                {
+                    <li>Dinner Reservation: <span class="font-semibold">@{
+                                if (booking.DinnerReservation)
+                                {
+                                    <span class="text-green-500">Yes</span>
+                                    ;
+                                }
+                                else
+                                {
+                                    <span class="text-red-500">No</span>
+                                    ;
+                                }
+                            }</span></li>
+                    <li>Tour Booking: <span class="font-semibold">@{
+                                if (booking.TourBooking)
+                                {
+                                    <span class="text-green-500">Yes</span>
+                                    ;
+                                }
+                                else
+                                {
+                                    <span class="text-red-500">No</span>
+                                    ;
+                                }
+                            }</span></li>
+                    <li>Golf Package: <span class="font-semibold">@{
+                                if (booking.GolfPackage)
+                                {
+                                    <span class="text-green-500">Yes</span>
+                                    ;
+                                }
+                                else
+                                {
+                                    <span class="text-red-500">No</span>
+                                    ;
+                                }
+                            }</span></li>
+                }
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

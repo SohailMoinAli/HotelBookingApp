@@ -1,23 +1,45 @@
 ﻿@model HotelBookingApp.Models.SpecialBooking
-
 @{
     ViewData["Title"] = "Book Special Offer";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<form asp-controller="SpecialBooking" asp-action="BookSpecial" method="post">
-    <input asp-for="SpecialOfferId" type="hidden" />
-    <div class="form-group">
-        <label asp-for="BookingDate">Booking Date</label>
-        <input asp-for="BookingDate" class="form-control" type="date" />
-        <span asp-validation-for="BookingDate" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Soft cream color */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-md">
+            <h1 class="text-xl font-bold text-center mb-4">@ViewData["Title"]</h1>
+            <form asp-controller="SpecialBooking" asp-action="BookSpecial" method="post">
+                <input asp-for="SpecialOfferId" type="hidden" />
+                <div class="mb-4">
+                    <label asp-for="BookingDate" class="block text-lg font-semibold">Booking Date</label>
+                    <input asp-for="BookingDate" class="w-full px-4 py-2 border rounded-md text-lg" type="date" />
+                    <span asp-validation-for="BookingDate" class="text-red-500"></span>
+                </div>
+                <div class="mb-6">
+                    <label asp-for="NumberOfGuests" class="block text-lg font-semibold">Number of Guests</label>
+                    <input asp-for="NumberOfGuests" class="w-full px-4 py-2 border rounded-md text-lg" type="number" />
+                    <span asp-validation-for="NumberOfGuests" class="text-red-500"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4"></div>
+                <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 text-lg font-semibold">
+                    Confirm Booking
+                </button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="NumberOfGuests">Number of Guests</label>
-        <input asp-for="NumberOfGuests" class="form-control" type="number" />
-        <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
-    </div>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">Confirm Booking</button>
-</form>
+</body>
+</html>
