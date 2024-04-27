@@ -4,6 +4,214 @@
     Layout = "_Layout";  // Assuming you have a layout file to include header, footer, etc.
 }
 
+<!-- Breadcrumbs & Page title-->
+<section class="section-md text-center bg-image breadcrumbs-01">
+    <div class="shell shell-fluid">
+        <div class="range range-xs-center">
+            <div class="cell-xs-12 cell-xl-11">
+                <h2 class="text-white">About Us</h2>
+                <ul class="breadcrumbs-custom">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">About Us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-md bg-secondary-4 text-center text-sm-left">
+    <div class="shell">
+        <div class="range range-50 range-md-justify range-sm-middle">
+            <div class="cell-sm-6 wow fadeInUp" data-wow-delay=".1s">
+                <div class="box-outline box-outline__mod-1">
+                    <figure>
+                        <img src="images/about-01-546x516.jpg" alt="" width="546" height="516" />
+                    </figure>
+                </div>
+            </div>
+            <div class="cell-sm-6 cell-md-5 wow fadeInUp" data-wow-delay=".2s">
+                <h3>A Few Words About Us</h3>
+                <p>Tired of your daily routine? Seeking for a place to stay and rest with your family? You are in the right place! Our spa resort and hotel provides luxury and historic accommodations for travelers. It combines modern style and amenities with traditional values.</p>
+                <p>All rooms are equipped with air conditioners and LCD TVs. Free WI-FI service is available throughout the territory of the hotel. Our restaurant food and meals from world cuisines unite people connecting history and traditions. Experience our warm hospitality, high quality of service and exceptional comfort! Make a reservation for your dream vacation today!</p><a class="button button-primary button button-square button-effect-ujarak button-lg" href="#"><span>read more</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section-md">
+    <div class="shell">
+        <h3>Rooms & Suites</h3>
+        <p>Royal Villas offers the finest accommodations with unique designs that provide both a luxurious and relaxing environment. Specially <br> selected fabrics and finishes vary from room to room, offering guests a variety of beautiful and unique atmospheres to select from.</p>
+        <div class="range range-30" data-lightgallery="group">
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-1-1200x800_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-1-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">Single Room</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-2-1200x800_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-2-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">Double Room</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-3-1058x800_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-3-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">Twin Room</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-4-1200x797_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-4-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">Family Room</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-5-1200x800_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-5-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">Executive Suite</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cell-sm-6 cell-md-4">
+                <a class="thumbnail-classic" href="images/grid-gallery-6-1200x800_original.jpg" data-lightgallery="item">
+                    <figure>
+                        <img src="images/grid-gallery-6-370x276.jpg" alt="" width="370" height="276" />
+                    </figure>
+                    <div class="caption">
+                        <p class="caption-title">VIP Suite</p>
+                        <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section-md bg-secondary-3 text-center">
+    <div class="shell">
+
+
+
+        <h2>Give Us Your Feedback</h2>
+        <div class="range range-50">
+            <div class="cell-xs-12">
+                <div class="box-outline box-outline-fullwidth box-outline__mod-1">
+
+                    <div class="flex justify-center items-center min-h-screen">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-8">
+                            <h2 class="font-bold text-2xl mb-4 text-center">Submit Your Feedback</h2>
+                            <form asp-action="Create" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-sm text-red-600 mb-4"></div>
+
+                                <div class="mb-4">
+                                    <label asp-for="Name" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</label>
+                                    <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                    <span asp-validation-for="Name" class="text-xs text-red-600"></span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="Email" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</label>
+                                    <input asp-for="Email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                    <span asp-validation-for="Email" class="text-xs text-red-600"></span>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label asp-for="Message" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</label>
+                                    <textarea asp-for="Message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3"></textarea>
+                                    <span asp-validation-for="Message" class="text-xs text-red-600"></span>
+                                </div>
+
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Feedback</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section-md bg-white">
+    <div class="shell">
+        <h2>Our Team</h2>
+        <div class="range range-xs-center range-75">
+            <!--team member 1-->
+            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="team-box box-outline">
+                    <div class="team-image-box">
+                        <img src="images/team-01-295x282.jpg" alt="" width="295" height="282" />
+                        <div class="team-image-caption">
+                            <ul class="list-inline">
+                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="team-caption"><a class="link team-title" href="#">Theresa Smith</a><span>General Manager</span></div>
+                </div>
+            </div>
+            <!--team member 2-->
+            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="team-box box-outline">
+                    <div class="team-image-box">
+                        <img src="images/team-02-295x282.jpg" alt="" width="295" height="282" />
+                        <div class="team-image-caption">
+                            <ul class="list-inline">
+                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="team-caption"><a class="link team-title" href="#">Albert Mills</a><span>Cosmetologist</span></div>
+                </div>
+            </div>
+            <!--team member 3-->
+            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".3s">
+                <div class="team-box box-outline">
+                    <div class="team-image-box">
+                        <img src="images/team-03-295x282.jpg" alt="" width="295" height="282" />
+                        <div class="team-image-caption">
+                            <ul class="list-inline">
+                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="team-caption"><a class="link team-title" href="#">Sandra Adams</a><span>Receptionist</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,34 +228,7 @@
     </style>
 </head>
 <body>
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-8">
-            <h2 class="font-bold text-2xl mb-4 text-center">Submit Your Feedback</h2>
-            <form asp-action="Create" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-sm text-red-600 mb-4"></div>
 
-                <div class="mb-4">
-                    <label asp-for="Name" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</label>
-                    <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                    <span asp-validation-for="Name" class="text-xs text-red-600"></span>
-                </div>
-
-                <div class="mb-4">
-                    <label asp-for="Email" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</label>
-                    <input asp-for="Email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                    <span asp-validation-for="Email" class="text-xs text-red-600"></span>
-                </div>
-
-                <div class="mb-6">
-                    <label asp-for="Message" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</label>
-                    <textarea asp-for="Message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3"></textarea>
-                    <span asp-validation-for="Message" class="text-xs text-red-600"></span>
-                </div>
-
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Feedback</button>
-            </form>
-        </div>
-    </div>
 </body>
 </html>
 
