@@ -1,11 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-
-<!-- icon list-->
-<!DOCTYPE html>
-<html class="wide wow-animation" lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
     <!-- Site Title-->
     <title>Home</title>
@@ -38,10 +32,8 @@
             display: block;
         }</style>
 </head>
-<body>
 
-    <!-- Page-->
-    <!-- Page preloader-->
+<body>
     <div class="page-loader">
         <div>
             <div class="page-loader-body">
@@ -84,29 +76,19 @@
             <nav class="rd-navbar rd-navbar-default-with-top-panel" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fullwidth" data-lg-device-layout="rd-navbar-fullwidth" data-md-stick-up-offset="90px" data-lg-stick-up-offset="150px" data-stick-up="true" data-sm-stick-up="true" data-md-stick-up="true" data-lg-stick-up="true">
                 <div class="rd-navbar-top-panel rd-navbar-collapse">
                     <div class="rd-navbar-top-panel-inner">
-                        <div class="left-side">
-                            <div class="group">
-                                <span class="text-italic">Follow Us:</span>
-                                <ul class="list-inline">
-                                    <li><a class="icon icon-sm icon-secondary-5 fa fa-instagram" href="#"></a></li>
-                                    <li><a class="icon icon-sm icon-secondary-5 fa fa-facebook" href="#"></a></li>
-                                    <li><a class="icon icon-sm icon-secondary-5 fa fa-twitter" href="#"></a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="center-side">
                             <!-- RD Navbar Brand-->
-                            <div class="rd-navbar-brand fullwidth-brand">                               
+                            <div class="rd-navbar-brand fullwidth-brand">
                                 <a class="rd-navbar-brand fullwidth-brand " asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img src="~/images/usp.jpg" alt="USP Logo" class="hotel-logo" width="120" height="48"/>
+                                    <img src="~/images/usp.jpg" alt="USP Logo" class="hotel-logo" width="120" height="48" />
                                 </a>
-                                    </div>
-                        </div>
+                            </div>
+                        </div> 
                         <div class="right-side">
                             <!-- Contact Info-->
                             <div class="contact-info">
                                 <div class="unit unit-middle unit-horizontal unit-spacing-xs">
-                                    <div class="unit__body"><a class="text-middle">USP Hotel</a></div>
+                                    <div class="unit__body"><a class="text-middle">ADMIN DASHBOARD</a></div>
                                 </div>
                             </div>
                         </div>
@@ -127,17 +109,15 @@
                             <div class="rd-navbar-nav-scroll-holder">
                                 <ul class="rd-navbar-nav">
                                     <li class="active">
-                                        <a href="index.html">Home</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Home">Home</a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link" asp-area="" asp-controller="Feedback" asp-action="Create">About US</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Rooms" asp-action="Index">Rooms Management</a>
                                     </li>
-                                    <li>
-                                        <a href="contacts.html">Contacts</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="RoomType" asp-action="Index">Room Types Management</a>
                                     </li>
-                                    <li>
-                                        <a href="typography.html">Typography</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -147,53 +127,19 @@
         </div>
     </header>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <!-- Brand/logo -->
-                
-                <!-- Toggler/collapsible Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Navbar links -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Reservations">Reservations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Rooms">Rooms</a>
-                        </li>
-                        <!-- ... additional links ... -->
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <!-- ... other social icons ... -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+   
+
+    <!-- Main content -->
+    <div class="container">
+        @RenderBody()
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

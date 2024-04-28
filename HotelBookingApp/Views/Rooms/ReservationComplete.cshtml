@@ -1,4 +1,4 @@
-﻿@model HotelBookingApp.Models.Reservation
+﻿@* @model HotelBookingApp.Models.Reservation
 
 <h2>Booking Confirmation</h2>
 
@@ -8,7 +8,7 @@
         <h3>Thank you @Model.CustomerName for your booking!</h3>
         <p>Your reservation ID <strong>@Model.ReservationId</strong> is confirmed.</p>
         <div>
-            <strong>Room Number:</strong> @Model.Room.Number<br>
+            <strong>Room Number:</strong> @Model.Room.RoomNumber<br>
             <strong>Room Type:</strong> @Model.Room.Type<br>
             <strong>Check-in Date:</strong> @Model.CheckInDate.ToString("MMMM dd, yyyy")<br>
             <strong>Check-out Date:</strong> @Model.CheckOutDate.ToString("MMMM dd, yyyy")<br>
@@ -45,3 +45,4 @@ else
         background-color: #0056b3;
     }
 </style>
+ *@

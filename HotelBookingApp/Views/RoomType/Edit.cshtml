@@ -1,0 +1,121 @@
+﻿@model HotelBookingApp.Models.RoomTypeViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Edit Room Type";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .box-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        h1, h4 {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            color: #333;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="box-container">
+    <h1>Edit Room Type</h1>
+    <hr />
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RoomTypeId" />
+
+                <!-- Text Inputs -->
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BasePrice" class="control-label"></label>
+                    <input asp-for="BasePrice" class="form-control" />
+                    <span asp-validation-for="BasePrice" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Capacity" class="control-label"></label>
+                    <input asp-for="Capacity" class="form-control" />
+                    <span asp-validation-for="Capacity" class="text-danger"></span>
+                </div>
+
+                <!-- Image Upload - Optional -->
+                <div class="form-group">
+                    <label for="NewImages" class="control-label">Upload New Images (optional)</label>
+                    <input type="file" class="form-control" asp-for="NewImages" multiple data-val="false" />
+                </div>
+
+                <!-- Image Deletion -->
+                @if (Model.Images != null && Model.Images.Any())
+                {
+                    <div class="form-group">
+                        <label>Existing Images</label>
+                        @foreach (var image in Model.Images)
+                        {
+                            <div>
+                                <img src="@image.ImageUrl" alt="Image" style="height: 100px;" />
+                                <input type="checkbox" name="ImagesToDelete" value="@image.Id" /> Delete
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="text-center">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</body>
+</html>
+

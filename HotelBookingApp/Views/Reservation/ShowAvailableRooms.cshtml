@@ -1,0 +1,71 @@
+﻿@model HotelBookingApp.Models.AvailableRoomTypesViewModel
+
+@{
+    ViewData["Title"] = "Available Rooms";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+</head>
+<h2>@ViewData["Title"]</h2>
+
+<h4>Booking Details:</h4>
+<p>Check-In: @Model.CheckInDate.ToShortDateString()</p>
+<p>Check-Out: @Model.CheckOutDate.ToShortDateString()</p>
+<p>Number of Guests: @Model.NumberOfGuests</p>
+
+@if (Model.RoomTypes.Any())
+{
+    <table id="availableRoomsTable" class="table display">
+        <thead>
+            <tr>
+                <th>Room Type</th>
+                <th>Description</th>
+                <th>Price Per Night</th>
+                <th>Available Rooms</th>
+                <th>Images</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.RoomTypes)
+            {
+                <tr>
+                    <td>@room.RoomTypeName</td>
+                    <td>@room.Description</td>
+                    <td>$@room.PricePerNight.ToString("N2")</td>
+                    <td>@room.AvailableCount</td>
+                    <td>
+                        @foreach (var imageUrl in room.ImageUrls)
+                        {
+                            <img src="@imageUrl" alt="Room Image" style="max-width: 100px; max-height: 100px; margin-right: 10px;" />
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Book", "Reservation", new { roomTypeId = room.RoomTypeId, checkInDate = Model.CheckInDate, checkOutDate = Model.CheckOutDate, numberOfGuests = Model.NumberOfGuests })" class="btn btn-primary">Book Now</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No rooms are available for your selected dates.</p>
+}
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#availableRoomsTable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
+}
+

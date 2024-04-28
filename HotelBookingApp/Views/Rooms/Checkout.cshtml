@@ -1,4 +1,4 @@
-﻿@model HotelBookingApp.Models.Reservation
+﻿@* @model HotelBookingApp.Models.Reservation
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,7 @@
             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
             <div>
                 <p class="mb-2">Reservation ID: <span class="font-semibold">@Model.ReservationId</span></p>
-                <p class="mb-2">Room Number: <span class="font-semibold">@Model.Room.Number</span></p>
+                <p class="mb-2">Room Number: <span class="font-semibold">@Model.Room.RoomNumber</span></p>
                 <p class="mb-2">Check-in Date: <span class="font-semibold">@Model.CheckInDate.ToShortDateString()</span></p>
                 <p class="mb-2">Check-out Date: <span class="font-semibold">@Model.CheckOutDate.ToShortDateString()</span></p>
                 <p class="mb-2">Total Cost: <span class="font-semibold">$@Model.TotalPrice.ToString("N2")</span></p>
@@ -35,4 +35,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> *@

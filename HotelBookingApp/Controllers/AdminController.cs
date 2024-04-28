@@ -16,6 +16,10 @@ public class AdminController : Controller
         _logger = logger;
     }
 
+    public IActionResult Home()
+    {
+        return View();
+    }
     public async Task<IActionResult> ListOffers()
     {
         var offers = await _context.SpecialOffers.ToListAsync();

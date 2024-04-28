@@ -1,0 +1,211 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+@using System.Linq;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Type Details - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+    <style>
+        body {
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
+            padding: 20px;
+        }
+
+        .box-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .image-container {
+            margin-bottom: 20px;
+        }
+
+            .image-container img {
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+        .details-container {
+            margin-bottom: 20px;
+        }
+
+            .details-container h2 {
+                margin-bottom: 10px;
+            }
+
+            .details-container p {
+                margin-bottom: 5px;
+            }
+
+        .btn-container {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+            .btn-primary:hover {
+                opacity: 0.9;
+            }
+
+        .btn-back {
+            margin-right: 10px;
+        }
+
+        .img-thumbnail {
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: black;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <!-- Entire content box -->
+                <div class="d-flex flex-column align-items-center vh-100 justify-content-center">
+                    <div class="content">
+                        <!-- Image Gallery Section -->
+                        <div class="mb-3">
+                            <h2 class="mb-3">Room Type Images</h2>
+                            <div class="row g-3">
+                                @if (ViewBag.HasImages)
+                                {
+                                    int index = 0; // Initialize the index counter
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        <div class="col-sm-6 col-md-4">
+                                            <img src="@image.ImageUrl" class="img-fluid rounded shadow-sm" alt="Room Image" onclick="openModal();currentSlide(@index)">
+                                        </div>
+                                        index++; // Increment the index for each iteration
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <img src="~/path/to/default/image.jpg" class="img-fluid rounded shadow-sm" alt="Default Room Image">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Room Details Section -->
+                        <div class="mb-3">
+                            <div class="card border-0 shadow">
+                                <div class="card-body">
+                                    <h3 class="card-title">@Model.Name</h3>
+                                    <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                                    <p class="card-text"><strong>Base Price:</strong> @String.Format("{0:C}", Model.BasePrice)</p>
+                                    <p class="card-text"><strong>Capacity:</strong> @Model.Capacity</p>
+                                    <a href="@Url.Action("Index", "RoomType")" class="btn btn-primary mt-3">
+                                        <i class="bi bi-arrow-left"></i> Back to List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="mySlides d-none">
+                            <img src="@image.ImageUrl" class="img-fluid">
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for modal and carousel-like functionality
+        function openModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+                keyboard: false
+            });
+            myModal.show();
+        }
+
+        function currentSlide(n) {
+            var slides = document.querySelectorAll('.mySlides');
+            if (n >= slides.length) n = 0;
+            if (n < 0) n = slides.length - 1;
+            slides.forEach(slide => {
+                slide.classList.add('d-none');
+            });
+            slides[n].classList.remove('d-none');
+        }
+    </script>
+</body>
+
+

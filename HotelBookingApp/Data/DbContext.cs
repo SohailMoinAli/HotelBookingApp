@@ -13,4 +13,7 @@ public class HotelDbContext : DbContext
 
     public DbSet<SpecialOffer> SpecialOffers { get; set; }
     public DbSet<SpecialBooking> SpecialBookings { get; set; }
+    public DbSet<RoomType> RoomTypes { get; set; }
+    public DbSet<RoomTypeImage> RoomTypeImages { get; set; }
+    public DbSet<RoomReservation> RoomReservations { get; set; }
 }

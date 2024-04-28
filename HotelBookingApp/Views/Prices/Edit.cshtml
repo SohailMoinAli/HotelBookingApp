@@ -2,7 +2,7 @@
 
 <h2>Edit Prices</h2>
 
-<form asp-action="Edit" asp-controller="Prices" method="post">
+@* <form asp-action="Edit" asp-controller="Prices" method="post">
     @Html.AntiForgeryToken() <!-- Ensures request comes from your site -->
 
     <h3>Room Prices</h3>
@@ -11,8 +11,8 @@
         for (int i = 0; i < Model.Rooms.Count; i++)
         {
             <div>
-                <label asp-for="@Model.Rooms[i].Number">Room Number:</label>
-                <input asp-for="@Model.Rooms[i].Number" class="form-control" />
+                <label asp-for="@Model.Rooms[i].RoomNumber">Room Number:</label>
+                <input asp-for="@Model.Rooms[i].RoomNumber" class="form-control" />
 
                 <label asp-for="@Model.Rooms[i].Type">Room Type:</label>
                 <input asp-for="@Model.Rooms[i].Type" class="form-control" />
@@ -55,3 +55,4 @@
 
     <button type="submit" class="btn btn-primary">Update Prices</button>
 </form>
+ *@

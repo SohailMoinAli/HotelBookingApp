@@ -1,49 +1,82 @@
-﻿@model HotelBookingApp.Models.RoomViewModel
+﻿@model HotelBookingApp.Models.Room
+@{
+    Layout = "_AdminLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .box-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
 
+        h1, h4 {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            color: #333;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box-container">
 <h1>Edit Room</h1>
 
 <form asp-action="Edit">
+            <div class="row">
+                <div class="col-md-12">
     <input type="hidden" asp-for="RoomId" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Number" class="control-label"></label>
-        <input asp-for="Number" class="form-control" />
-        <span asp-validation-for="Number" class="text-danger"></span>
+        <label asp-for="RoomNumber" class="control-label"></label>
+        <input asp-for="RoomNumber" class="form-control" />
+        <span asp-validation-for="RoomNumber" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Type" class="control-label"></label>
-        <input asp-for="Type" class="form-control" />
-        <span asp-validation-for="Type" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price" class="control-label"></label>
-        <input asp-for="Price" class="form-control" type="number" step="0.01" min="0" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="IsAvailable" class="control-label"></label>
-        <select asp-for="IsAvailable" class="form-control">
-            <option value="true">Available</option>
-            <option value="false">Booked</option>
+        <label asp-for="RoomTypeId" class="control-label"></label>
+        <select asp-for="RoomTypeId" asp-items="@ViewBag.RoomTypeList" class="form-control">
+            <option value="">Select Room Type</option>
         </select>
-        <span asp-validation-for="IsAvailable" class="text-danger"></span>
+        <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status" class="control-label"></label>
+        <select asp-for="Status" asp-items="@ViewBag.StatusList" class="form-control">
+            <option value="">Select Status</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Save Changes</button>
+    </div>
+    </div>
 </form>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var priceInput = document.getElementById('Price');
-
-        priceInput.addEventListener('change', function() {
-            var value = parseFloat(this.value);
-            if (!isNaN(value)) {
-                this.value = value.toFixed(2);
-            }
-        });
-    });
-</script>
+</div>
+</body>
+</html>

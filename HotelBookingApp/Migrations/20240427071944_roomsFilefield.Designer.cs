@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240427071944_roomsFilefield")]
+    partial class roomsFilefield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,6 +137,9 @@ namespace HotelBookingApp.Migrations
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -142,6 +148,8 @@ namespace HotelBookingApp.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("ReservationId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Reservations");
                 });
@@ -154,48 +162,39 @@ namespace HotelBookingApp.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("RoomId"));
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<string>("RoomNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("RoomTypeId")
+                    b.Property<int>("RoomTypeID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("RoomId");
 
-                    b.HasIndex("RoomTypeId");
+                    b.HasIndex("RoomTypeID");
 
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.RoomReservation", b =>
-                {
-                    b.Property<int>("RoomReservationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("RoomReservationId"));
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoomReservationId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("RoomReservations");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.RoomType", b =>
@@ -206,53 +205,17 @@ namespace HotelBookingApp.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("RoomTypeId"));
 
-                    b.Property<decimal>("BasePrice")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("RoomTypeDescription")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("RoomTypeName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("RoomTypeId");
 
                     b.ToTable("RoomTypes");
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.RoomTypeImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomTypeId");
-
-                    b.ToTable("RoomTypeImages");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.SpecialBooking", b =>
@@ -323,41 +286,22 @@ namespace HotelBookingApp.Migrations
                     b.Navigation("Reservation");
                 });
 
-            modelBuilder.Entity("HotelBookingApp.Models.Room", b =>
+            modelBuilder.Entity("HotelBookingApp.Models.Reservation", b =>
                 {
-                    b.HasOne("HotelBookingApp.Models.RoomType", "RoomType")
-                        .WithMany("Rooms")
-                        .HasForeignKey("RoomTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RoomType");
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.RoomReservation", b =>
-                {
-                    b.HasOne("HotelBookingApp.Models.Reservation", "Reservation")
-                        .WithMany("RoomReservations")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HotelBookingApp.Models.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Reservation");
-
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HotelBookingApp.Models.RoomTypeImage", b =>
+            modelBuilder.Entity("HotelBookingApp.Models.Room", b =>
                 {
                     b.HasOne("HotelBookingApp.Models.RoomType", "RoomType")
-                        .WithMany("Images")
-                        .HasForeignKey("RoomTypeId")
+                        .WithMany()
+                        .HasForeignKey("RoomTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -378,15 +322,6 @@ namespace HotelBookingApp.Migrations
             modelBuilder.Entity("HotelBookingApp.Models.Reservation", b =>
                 {
                     b.Navigation("AdditionalBookings");
-
-                    b.Navigation("RoomReservations");
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.RoomType", b =>
-                {
-                    b.Navigation("Images");
-
-                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }

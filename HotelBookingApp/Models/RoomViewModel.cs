@@ -1,13 +1,17 @@
 ﻿// Models/RoomViewModel.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace HotelBookingApp.Models
 {
     public class RoomViewModel
     {
         public int RoomId { get; set; }
-        public string Number { get; set; }
-        public string Type { get; set; }
-        public bool IsAvailable { get; set; }
-        public decimal Price { get; set; }
-        public string AvailabilityStatus => IsAvailable ? "Available" : "Booked";
+        [Required(ErrorMessage = "Room number is required.")]
+        public string RoomNumber { get; set; }
+        public int RoomTypeID { get; set; }
+        public virtual RoomType? RoomType { get; set; }
+        public string Status { get; set; }
+
     }
 }

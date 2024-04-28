@@ -1,0 +1,83 @@
+﻿@model HotelBookingApp.Models.Room  
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Delete Room";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .box-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            color: #333;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box-container">
+        <h1>Delete Room</h1>
+        <form asp-action="DeletePOST" asp-route-id="@Model.RoomId" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RoomId" />
+
+            <!-- Text Inputs, All Disabled for Read-Only -->
+            <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label">Room Number</label>
+                <input asp-for="RoomNumber" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoomType.Name" class="control-label"></label>
+                <input asp-for="RoomType.Name" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label">Status</label>
+                <input asp-for="Status" class="form-control" disabled />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

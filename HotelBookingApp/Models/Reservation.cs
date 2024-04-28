@@ -10,10 +10,6 @@ namespace HotelBookingApp.Models
         [Key]
         public int ReservationId { get; set; }
 
-        [ForeignKey("Room")]
-        public int RoomId { get; set; }
-        public Room Room { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "Customer name must be under 100 characters.")]
         public string CustomerName { get; set; }
@@ -26,8 +22,13 @@ namespace HotelBookingApp.Models
         [DataType(DataType.Date)]
         public DateTime CheckOutDate { get; set; }
 
+        public int NumberOfRooms { get; set; }
+        public int NumberOfGuests { get; set; }
+
         public decimal TotalPrice { get; set; }
         public string Status { get; set; } = "Pending";
+        
+        public virtual ICollection<RoomReservation> RoomReservations { get; set; }
         public List<AdditionalBooking>? AdditionalBookings { get; set; }
 
     }

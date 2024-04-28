@@ -1,4 +1,4 @@
-﻿@model HotelBookingApp.Models.Reservation
+﻿@* @model HotelBookingApp.Models.Reservation
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md">
             <h2 class="text-2xl font-bold mb-4">Booking Confirmation</h2>
-            <p class="mb-4">Thank you, <span class="font-semibold">@Model.CustomerName</span>. Your booking for Room <span class="font-semibold">@Model.Room.Number</span> is confirmed.</p>
+            <p class="mb-4">Thank you, <span class="font-semibold">@Model.CustomerName</span>. Your booking for Room <span class="font-semibold">@Model.Room.RoomNumber</span> is confirmed.</p>
             <p class="mb-2">Additional Services:</p>
             <ul class="list-disc pl-4">
                 @foreach (var booking in Model.AdditionalBookings)
@@ -65,4 +65,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> *@
