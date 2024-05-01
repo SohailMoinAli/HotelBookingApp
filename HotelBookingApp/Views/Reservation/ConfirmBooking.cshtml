@@ -1,0 +1,21 @@
+﻿<h2>Confirm Booking</h2>
+
+@foreach (var detail in Model.ReservationDetails)
+{
+    <div>
+        <h4>Room Type: @detail.RoomTypeName</h4>
+        <p>Number of Rooms: @detail.NumberOfRooms</p>
+        <p>Price Per Night: $@detail.PricePerNight</p>
+        <p>Total Price for @Model.NumberOfNights Nights: $@(detail.TotalPrice * Model.NumberOfNights)</p>
+    </div>
+}
+
+<div>
+    <h3>Grand Total: $@Model.GrandTotal</h3>
+</div>
+
+<form asp-action="ProceedToCheckout" method="post">
+    <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+</form>
+
+

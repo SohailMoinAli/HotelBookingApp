@@ -13,8 +13,9 @@
 <p>Check-In: @Model.CheckInDate.ToShortDateString()</p>
 <p>Check-Out: @Model.CheckOutDate.ToShortDateString()</p>
 <p>Number of Guests: @Model.NumberOfGuests</p>
+<p>Number of Nights: @Model.NumberOfNights</p>
 
-@if (Model.RoomTypes.Any())
+@* @if (Model.RoomTypes.Any())
 {
     <table id="availableRoomsTable" class="table display">
         <thead>
@@ -67,5 +68,95 @@ else
             });
         });
     </script>
+} *@
+@if (Model.RoomTypes.Any())
+{
+    <form asp-action="BookRooms" method="post">
+        <input asp-for="CheckInDate" type="hidden" />
+        <input asp-for="CheckOutDate" type="hidden" />
+        <input asp-for="NumberOfGuests" type="hidden" />
+        <input name="NumberOfNights" type="hidden" value="@Model.NumberOfNights" />
+
+
+        <table id="roomsTable" class="table">
+            <thead>
+                <tr>
+                    <th>Room Type</th>
+                    <th>Description</th>
+                    <th>Price Per Night</th>
+                    <th>Available Rooms</th>
+                    <th>Quantity</th>
+                    <th>Total Price per Night</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.RoomTypes.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.RoomTypes[i].RoomTypeName</td>
+                        <td>@Model.RoomTypes[i].Description</td>
+                        <td>$@Model.RoomTypes[i].PricePerNight.ToString("N2")</td>
+                        <td>@Model.RoomTypes[i].AvailableCount</td>
+                        <td>
+                            <input asp-for="RoomTypes[i].RoomTypeId" type="hidden" />
+                            <input asp-for="RoomTypes[i].RoomTypeName" type="hidden" />
+                            <input asp-for="RoomTypes[i].Description" type="hidden" />
+                            <input asp-for="RoomTypes[i].PricePerNight" type="hidden" />
+                            <input asp-for="RoomTypes[i].SelectedRooms" class="form-control room-qty" type="number"
+                                   data-index="@i" data-price="@Model.RoomTypes[i].PricePerNight" min="0" max="@Model.RoomTypes[i].AvailableCount" value="0" />
+                        </td>
+                        <td>$<span class="total-price" id="total-per-night-@i">0.00</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="total-amount">
+            <h4>Total Amount Per Night: $<span id="total-per-night">0.00</span></h4>
+            <h4>Total Amount for @Model.NumberOfNights Nights: $<span id="grand-total">0.00</span></h4>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Book Selected Rooms</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        No rooms are available for your selected dates.
+    </div>
 }
 
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#roomsTable').DataTable({
+                "paging": true,
+                "ordering": false, // Disable ordering to handle custom input fields correctly
+                "info": true
+            });
+
+            function updateTotal() {
+                let totalPerNight = 0;
+                let grandTotal = 0;
+                const numberOfNights = @Model.NumberOfNights;
+                $('.room-qty').each(function () {
+                    const pricePerNight = parseFloat($(this).data('price'));
+                    const qty = parseInt($(this).val()) || 0;
+                    const totalForTypePerNight = pricePerNight * qty;
+                    $('#total-per-night-' + $(this).data('index')).text(totalForTypePerNight.toFixed(2));
+                    totalPerNight += totalForTypePerNight;
+                    grandTotal += totalForTypePerNight * numberOfNights;
+                });
+                $('#total-per-night').text(totalPerNight.toFixed(2));
+                $('#grand-total').text(grandTotal.toFixed(2));
+            }
+
+            $('.room-qty').on('change keyup', updateTotal);
+
+            updateTotal();  // Initial update on page load
+        });
+    </script>
+}

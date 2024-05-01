@@ -42,6 +42,7 @@ public class RoomsController : Controller
     public async Task<IActionResult> Create(Room room)
     {
         ModelState.Remove("RoomType");
+        ModelState.Remove("RoomReservations");
         if (ModelState.IsValid)
         {
             _context.Add(room);

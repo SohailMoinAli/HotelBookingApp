@@ -1,0 +1,22 @@
+﻿@model ConfirmationViewModel
+
+<h2>Booking Confirmation</h2>
+<h3>Reservation Details</h3>
+<p>Reservation ID: @Model.ReservationId</p>
+<p>Customer Name: @Model.CustomerName</p>
+<p>Check-In Date: @Model.CheckInDate.ToString("d")</p>
+<p>Check-Out Date: @Model.CheckOutDate.ToString("d")</p>
+<p>Number of Nights: @Model.NumberOfNights</p>
+<p>Total Price: $@Model.TotalPrice</p>
+
+<h4>Rooms Booked</h4>
+@foreach (var room in Model.Rooms)
+{
+    <div>
+        <p>Room Type: @room.RoomTypeName</p>
+        <p>Number of Rooms: @room.NumberOfRooms</p>
+        <p>Price Per Night: $@room.PricePerNight</p>
+    </div>
+}
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Home</a>
