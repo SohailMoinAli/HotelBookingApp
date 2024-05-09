@@ -343,7 +343,7 @@ namespace HotelBookingApp.Migrations
                         .IsRequired();
 
                     b.HasOne("HotelBookingApp.Models.Room", "Room")
-                        .WithMany()
+                        .WithMany("RoomReservations")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -379,6 +379,11 @@ namespace HotelBookingApp.Migrations
                 {
                     b.Navigation("AdditionalBookings");
 
+                    b.Navigation("RoomReservations");
+                });
+
+            modelBuilder.Entity("HotelBookingApp.Models.Room", b =>
+                {
                     b.Navigation("RoomReservations");
                 });
 

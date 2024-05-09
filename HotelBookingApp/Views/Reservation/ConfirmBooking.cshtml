@@ -1,21 +1,142 @@
-﻿<h2>Confirm Booking</h2>
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Room Types - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+    <style>
+        body {
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
+        }
+
+        .box-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+
+        @@media (min-width: 768px) {
+            .box-container {
+                max-width: 80%; /* Adjust based on breakpoint */
+            }
+        }
+
+        table {
+            width: 100%; /* Ensures the table is full-width */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0; /* Light gray border for subtle separation */
+        }
+
+        th {
+            background-color: #EDF2F7; /* Slightly colored header for distinction */
+            color: #2D3748; /* Darker text for headers */
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+        .btn-success {
+            background-color: #48BB78;
+        }
+
+        .btn-danger {
+            background-color: #F56565;
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+                opacity: 0.9;
+            }
+    </style>
+</head>
+
+<body>
+    <br />
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div>
+
+<h2>Confirm Booking</h2>
 
 @foreach (var detail in Model.ReservationDetails)
 {
-    <div>
-        <h4>Room Type: @detail.RoomTypeName</h4>
-        <p>Number of Rooms: @detail.NumberOfRooms</p>
-        <p>Price Per Night: $@detail.PricePerNight</p>
-        <p>Total Price for @Model.NumberOfNights Nights: $@(detail.TotalPrice * Model.NumberOfNights)</p>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4>Room Type: @detail.RoomTypeName</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Number of Rooms: @detail.NumberOfRooms</p>
+            <p class="card-text">Price Per Night: $@detail.PricePerNight.ToString("F2")</p>
+
+            <p class="card-text">Total Price for @Model.NumberOfNights Nights: $@((detail.TotalPrice * Model.NumberOfNights).ToString("F2"))</p>
+
+        </div>
     </div>
 }
 
-<div>
-    <h3>Grand Total: $@Model.GrandTotal</h3>
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Grand Total: $@Model.GrandTotal.ToString("F2")</h3>
+    </div>
 </div>
 
 <form asp-action="ProceedToCheckout" method="post">
-    <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    <input type="hidden" name="checkInDate" value="@Model.CheckInDate.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="checkOutDate" value="@Model.CheckOutDate.ToString("yyyy-MM-dd")" />
+    <button type="submit" class="btn btn-primary mt-3">Proceed to Checkout</button>
 </form>
 
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#roomsTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+</body>
+</html>
+    

@@ -29,18 +29,19 @@ namespace HotelBookingApp.Controllers
             {
                 // Retrieve room types and their available room counts for the given dates
                 var availableRoomTypes = _context.RoomTypes
-                    .Select(rt => new RoomTypeAvailabilityViewModel
-                    {
-                        RoomTypeId = rt.RoomTypeId,
-                        RoomTypeName = rt.Name,
-                        AvailableCount = rt.Rooms
-                            .Where(room => !room.RoomReservations.Any(res =>
-                                res.Reservation.CheckInDate < model.CheckOutDate &&
-                                res.Reservation.CheckOutDate > model.CheckInDate))
-                            .Count(),
-                        PricePerNight = rt.BasePrice,
-                        Description = rt.Description,
-                    }).ToList();
+                .Select(rt => new RoomTypeAvailabilityViewModel
+                {
+                    RoomTypeId = rt.RoomTypeId,
+                    RoomTypeName = rt.Name,
+                    AvailableCount = rt.Rooms
+                        .Where(room => room.Status == "Available" &&
+                                        !room.RoomReservations.Any(res =>
+                                            res.Reservation.CheckInDate < model.CheckOutDate &&
+                                            res.Reservation.CheckOutDate > model.CheckInDate))
+                        .Count(),
+                    PricePerNight = rt.BasePrice,
+                    Description = rt.Description,
+                }).ToList();
 
 
 
@@ -126,8 +127,8 @@ namespace HotelBookingApp.Controllers
             TempData["ReservationDetails"] = JsonConvert.SerializeObject(reservationDetails);
             TempData["NumberOfNights"] = numberOfNights.ToString();
             TempData["GrandTotal"] = grandTotal.ToString("F2");
-            TempData["CheckInDate"] = model.CheckInDate.ToString("o");  // ISO 8601 format
-            TempData["CheckOutDate"] = model.CheckOutDate.ToString("o");
+            TempData["CheckInDate"] = model.CheckInDate.ToString("dd/MM/yyyy");
+            TempData["CheckOutDate"] = model.CheckOutDate.ToString("dd/MM/yyyy");
             TempData["TotalGuests"] = model.NumberOfGuests.ToString();
 
             return RedirectToAction("ConfirmBooking");
@@ -159,26 +160,31 @@ namespace HotelBookingApp.Controllers
 
         public List<int> GetAvailableRoomIds(int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
         {
-            // Fetch all rooms of the specified type
-            var roomsOfType = _context.Rooms.Where(r => r.RoomTypeId == roomTypeId && r.Status == "Available").Select(r => r.RoomId).ToList();
+            // Fetch all rooms of the specified type that are available for the entire duration
+            var availableRoomIds = _context.Rooms
+                .Where(r => r.RoomTypeId == roomTypeId && r.Status == "Available")
+                .Select(r => r.RoomId)
+                .ToList();
 
-            // Fetch all reservations that conflict with the desired dates
+            // Fetch reserved room IDs that conflict with the desired dates
             var reservedRoomIds = _context.RoomReservations
-                .Where(rr => roomsOfType.Contains(rr.RoomId) &&
+                .Where(rr => availableRoomIds.Contains(rr.RoomId) &&
                              rr.Reservation.CheckInDate < checkOutDate &&
                              rr.Reservation.CheckOutDate > checkInDate)
                 .Select(rr => rr.RoomId)
                 .Distinct()
                 .ToList();
 
-            // Exclude rooms that are already reserved in the conflicting period
-            var availableRoomIds = roomsOfType.Except(reservedRoomIds).ToList();
+            // Exclude reserved rooms from the available room IDs
+            availableRoomIds = availableRoomIds.Except(reservedRoomIds).ToList();
+
             return availableRoomIds;
         }
 
         [HttpPost]
         public IActionResult ProceedToCheckout()
         {
+
             if (TempData["ReservationDetails"] is not string reservationDetailsJson)
             {
                 return RedirectToAction("Index");
@@ -193,6 +199,7 @@ namespace HotelBookingApp.Controllers
             }
 
             var numberOfNights = Convert.ToInt32(TempData["NumberOfNights"]);
+            TempData["NumberOfNights"] = numberOfNights;  // Re-store the data for future use
             var grandTotal = Convert.ToDecimal(TempData["GrandTotal"]);
 
             var reservation = new Reservation
@@ -214,7 +221,7 @@ namespace HotelBookingApp.Controllers
                 var availableRoomIds = GetAvailableRoomIds(detail.RoomTypeId, checkInDate, checkOutDate);
                 if (availableRoomIds.Count < detail.NumberOfRooms)
                 {
-                    TempData["Error"] = "Not enough rooms available.";
+                    TempData["BookingError"] = "Not enough rooms available.";
                     return RedirectToAction("BookingError");
                 }
                 for (int i = 0; i < detail.NumberOfRooms; i++)
@@ -236,15 +243,17 @@ namespace HotelBookingApp.Controllers
         public IActionResult Confirmation(int reservationId)
         {
             var reservation = _context.Reservations
-                            .Include(r => r.RoomReservations)
-                                .ThenInclude(rr => rr.Room)
-                                    .ThenInclude(room => room.RoomType) // Ensure RoomType is loaded
-                            .FirstOrDefault(r => r.ReservationId == reservationId);
+                .Include(r => r.RoomReservations)
+                    .ThenInclude(rr => rr.Room)
+                        .ThenInclude(room => room.RoomType) // Ensure RoomType is loaded
+                .FirstOrDefault(r => r.ReservationId == reservationId);
 
             if (reservation == null)
             {
                 return RedirectToAction("Error"); // Redirect to an error page if the reservation is not found
             }
+
+            var numberOfNights = Convert.ToInt32(TempData["NumberOfNights"]);
 
             var viewModel = new ConfirmationViewModel
             {
@@ -252,29 +261,19 @@ namespace HotelBookingApp.Controllers
                 CustomerName = reservation.CustomerName,
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
-                NumberOfNights = (int)(reservation.CheckOutDate - reservation.CheckInDate).TotalDays + 1,
+                NumberOfNights = numberOfNights,
                 TotalPrice = reservation.TotalPrice,
-                Rooms = reservation.RoomReservations.Select(rr => new RoomDetailViewModel
-                {
-                    RoomTypeName = rr.Room.RoomType.Name, // Ensure navigation properties are correctly set up
-                    NumberOfRooms = reservation.NumberOfRooms,
-                    PricePerNight = rr.Room.RoomType.BasePrice
-                }).ToList()
+                Rooms = reservation.RoomReservations.GroupBy(rr => rr.Room.RoomType)
+                    .Select(group => new RoomDetailViewModel
+                    {
+                        RoomTypeName = group.Key.Name,
+                        NumberOfRooms = group.Count(), // Count the number of room reservations for this room type
+                        PricePerNight = group.Key.BasePrice
+                    }).ToList()
             };
-
 
             return View(viewModel);
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 }

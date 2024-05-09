@@ -84,6 +84,7 @@ public class RoomsController : Controller
     public async Task<IActionResult> Edit(Room room)
     {
         ModelState.Remove("RoomType");
+        ModelState.Remove("RoomReservations");
         if (!ModelState.IsValid)
         {
             ViewBag.RoomTypeList = new SelectList(_context.RoomTypes, "RoomTypeId", "Name", room.RoomTypeId);

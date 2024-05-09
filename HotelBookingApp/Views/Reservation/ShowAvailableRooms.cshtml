@@ -10,8 +10,8 @@
 <h2>@ViewData["Title"]</h2>
 
 <h4>Booking Details:</h4>
-<p>Check-In: @Model.CheckInDate.ToShortDateString()</p>
-<p>Check-Out: @Model.CheckOutDate.ToShortDateString()</p>
+<p>Check-In: @Model.CheckInDate.ToString("MM/dd/yyyy")</p>
+<p>Check-Out: @Model.CheckOutDate.ToString("MM/dd/yyyy")</p>
 <p>Number of Guests: @Model.NumberOfGuests</p>
 <p>Number of Nights: @Model.NumberOfNights</p>
 
@@ -72,10 +72,11 @@ else
 @if (Model.RoomTypes.Any())
 {
     <form asp-action="BookRooms" method="post">
-        <input asp-for="CheckInDate" type="hidden" />
-        <input asp-for="CheckOutDate" type="hidden" />
+        <input asp-for="CheckInDate" type="hidden" value="@Model.CheckInDate" />
+        <input asp-for="CheckOutDate" type="hidden" value="@Model.CheckOutDate" />
         <input asp-for="NumberOfGuests" type="hidden" />
         <input name="NumberOfNights" type="hidden" value="@Model.NumberOfNights" />
+
 
 
         <table id="roomsTable" class="table">

@@ -23,20 +23,73 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" integrity="sha384-+bEHf1LHCfwJFFzFJDOlI6e/yW7eE8tZjAwjYqz6sM5uQ4M5b1N+2SvS5u+mEJvy" crossorigin="anonymous">
 
     <style>
-        .ie-panel {
-            display: none;
-            background: #212121;
-            padding: 10px 0;
-            box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);
-            clear: both;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+        body {
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
         }
 
-        html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {
-            display: block;
-        }</style>
+        .box-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+
+        @@media (min-width: 768px) {
+            .box-container {
+                max-width: 80%; /* Adjust based on breakpoint */
+            }
+        }
+
+        table {
+            width: 100%; /* Ensures the table is full-width */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0; /* Light gray border for subtle separation */
+        }
+
+        th {
+            background-color: #EDF2F7; /* Slightly colored header for distinction */
+            color: #2D3748; /* Darker text for headers */
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+        .btn-success {
+            background-color: #48BB78;
+        }
+
+        .btn-danger {
+            background-color: #F56565;
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+                opacity: 0.9;
+            }
+    </style>
 </head>
 <body>
 
@@ -96,17 +149,17 @@
                         </div>
                         <div class="center-side">
                             <!-- RD Navbar Brand-->
-                            <div class="rd-navbar-brand fullwidth-brand">                               
+                            <div class="rd-navbar-brand fullwidth-brand">
                                 <a class="rd-navbar-brand fullwidth-brand " asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img src="~/images/usp.jpg" alt="USP Logo" class="hotel-logo" width="120" height="48"/>
+                                    <img src="~/images/logo.png" alt="Moonlight Logo" class="hotel-logo" width="210" height="100" />
                                 </a>
-                                    </div>
+                            </div>
                         </div>
                         <div class="right-side">
                             <!-- Contact Info-->
                             <div class="contact-info">
                                 <div class="unit unit-middle unit-horizontal unit-spacing-xs">
-                                    <div class="unit__body"><a class="text-middle">USP Hotel</a></div>
+                                    <div class="unit__body"><a class="text-middle">The Moonlight Hotel</a></div>
                                 </div>
                             </div>
                         </div>
@@ -126,17 +179,14 @@
                         <div class="rd-navbar-nav-wrap">
                             <div class="rd-navbar-nav-scroll-holder">
                                 <ul class="rd-navbar-nav">
-                                    <li class="active">
-                                        <a href="index.html">Home</a>
+                                    <li>
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
                                         <a class="nav-link" asp-area="" asp-controller="Feedback" asp-action="Create">About US</a>
                                     </li>
                                     <li>
-                                        <a href="contacts.html">Contacts</a>
-                                    </li>
-                                    <li>
-                                        <a href="typography.html">Typography</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Reservation" asp-action="Index">Book A Room</a>
                                     </li>
                                 </ul>
                             </div>
@@ -147,53 +197,14 @@
         </div>
     </header>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <!-- Brand/logo -->
-                
-                <!-- Toggler/collapsible Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Navbar links -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Reservations">Reservations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Rooms">Rooms</a>
-                        </li>
-                        <!-- ... additional links ... -->
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <!-- ... other social icons ... -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -227,7 +238,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <p class="rights"><span>&copy;&nbsp;</span><span>2019</span><span>&nbsp;</span><span class="copyright-year"></span>Royal Villas. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
+                                        <p class="rights"><span>&copy;&nbsp;</span><span>2024</span><span>&nbsp;</span><span class="copyright-year"></span>Moonlight Hotel by Control Alt Chaos</p>
                                     </li>
                                 </ul>
                             </div>
@@ -239,14 +250,14 @@
                                     <li>
                                         <dl class="list-desc">
                                             <dt><span class="icon icon-sm mdi mdi-map-marker"></span></dt>
-                                            <dd><a class="link link-gray-darker" href="#">6036 Richmond hwy., Alexandria, VA, 2230</a></dd>
+                                            <dd><a class="link link-gray-darker" href="#">Laucala Bay, Suva, Fiji</a></dd>
                                         </dl>
                                     </li>
                                     <li>
                                         <dl class="list-desc">
                                             <dt><span class="icon icon-sm mdi mdi-phone"></span></dt>
                                             <dd class="text-gray-darker">
-                                                Call Us: <a class="link link-gray-darker" href="tel:#">+1 (409) 987–5874</a>
+                                                Call Us: <a class="link link-gray-darker" href="tel:#">+679 987–5874</a>
                                             </dd>
                                         </dl>
                                     </li>
@@ -307,6 +318,14 @@
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.responsive.min.js"></script>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#roomsTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 </body>
 </html>

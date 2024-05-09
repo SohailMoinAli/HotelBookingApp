@@ -1,23 +1,104 @@
 ﻿@model HotelBookingApp.Models.SpecialOffer
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Special Offer - USP Hotel</title>
+    <title>Manage Room Types - USP Hotel</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
     <style>
         body {
-            background-color: #f5f5dc; /* Consistent soft cream color background */
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
         }
+
+        .box-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+
+        @@media (min-width: 768px) {
+            .box-container {
+                max-width: 80%; /* Adjust based on breakpoint */
+            }
+        }
+
+        table {
+            width: 100%; /* Ensures the table is full-width */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0; /* Light gray border for subtle separation */
+        }
+
+        th {
+            background-color: #EDF2F7; /* Slightly colored header for distinction */
+            color: #2D3748; /* Darker text for headers */
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+        .btn-success {
+            background-color: #48BB78;
+        }
+
+        .btn-danger {
+            background-color: #F56565;
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+                opacity: 0.9;
+            }
     </style>
 </head>
+
 <body>
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-8">
+    <br />
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+        <div class="box-container">
             <h2 class="font-bold text-2xl mb-4 text-center">Create Special Offer</h2>
             <form asp-action="CreateOffer" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-sm text-red-600 mb-4"></div>
@@ -55,7 +136,14 @@
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Offer</button>
             </form>
         </div>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#roomsTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 </body>
 </html>
-

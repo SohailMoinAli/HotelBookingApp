@@ -4,16 +4,94 @@
     Layout = "_Layout";  // Assuming you have a layout file to include header, footer, etc.
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Room Types - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+    <style>
+        body {
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
+        }
+
+        .box-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+
+        @@media (min-width: 768px) {
+            .box-container {
+                max-width: 80%; /* Adjust based on breakpoint */
+            }
+        }
+
+        table {
+            width: 100%; /* Ensures the table is full-width */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0; /* Light gray border for subtle separation */
+        }
+
+        th {
+            background-color: #EDF2F7; /* Slightly colored header for distinction */
+            color: #2D3748; /* Darker text for headers */
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+        .btn-success {
+            background-color: #48BB78;
+        }
+
+        .btn-danger {
+            background-color: #F56565;
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+                opacity: 0.9;
+            }
+    </style>
+</head>
+
+
+
 <!-- Breadcrumbs & Page title-->
 <section class="section-md text-center bg-image breadcrumbs-01">
     <div class="shell shell-fluid">
         <div class="range range-xs-center">
             <div class="cell-xs-12 cell-xl-11">
                 <h2 class="text-white">About Us</h2>
-                <ul class="breadcrumbs-custom">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">About Us</li>
-                </ul>
             </div>
         </div>
     </div>
@@ -25,7 +103,7 @@
             <div class="cell-sm-6 wow fadeInUp" data-wow-delay=".1s">
                 <div class="box-outline box-outline__mod-1">
                     <figure>
-                        <img src="images/about-01-546x516.jpg" alt="" width="546" height="516" />
+                        <img src="~/images/2.jpg" alt="" width="546" height="516" />
                     </figure>
                 </div>
             </div>
@@ -40,12 +118,12 @@
 <section class="section section-md">
     <div class="shell">
         <h3>Rooms & Suites</h3>
-        <p>Royal Villas offers the finest accommodations with unique designs that provide both a luxurious and relaxing environment. Specially <br> selected fabrics and finishes vary from room to room, offering guests a variety of beautiful and unique atmospheres to select from.</p>
+        <p>The Moonlight Hotel offers the finest accommodations with unique designs that provide both a luxurious and relaxing environment. Specially <br> selected fabrics and finishes vary from room to room, offering guests a variety of beautiful and unique atmospheres to select from.</p>
         <div class="range range-30" data-lightgallery="group">
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-1-1200x800_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/SR-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-1-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/SR.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">Single Room</p>
@@ -54,9 +132,9 @@
                 </a>
             </div>
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-2-1200x800_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/DR-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-2-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/DR.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">Double Room</p>
@@ -65,9 +143,9 @@
                 </a>
             </div>
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-3-1058x800_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/TR-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-3-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/TR.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">Twin Room</p>
@@ -76,9 +154,9 @@
                 </a>
             </div>
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-4-1200x797_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/FR-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-4-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/FR.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">Family Room</p>
@@ -87,9 +165,9 @@
                 </a>
             </div>
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-5-1200x800_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/ES-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-5-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/ES.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">Executive Suite</p>
@@ -98,9 +176,9 @@
                 </a>
             </div>
             <div class="cell-sm-6 cell-md-4">
-                <a class="thumbnail-classic" href="images/grid-gallery-6-1200x800_original.jpg" data-lightgallery="item">
+                <a class="thumbnail-classic" href="~/images/VIP-1.jpg" data-lightgallery="item">
                     <figure>
-                        <img src="images/grid-gallery-6-370x276.jpg" alt="" width="370" height="276" />
+                        <img src="~/images/VIP.jpg" alt="" width="370" height="276" />
                     </figure>
                     <div class="caption">
                         <p class="caption-title">VIP Suite</p>
@@ -111,37 +189,35 @@
         </div>
     </div>
 </section>
+
+
 <section class="section section-md bg-secondary-3 text-center">
     <div class="shell">
-
-
-
         <h2>Give Us Your Feedback</h2>
         <div class="range range-50">
             <div class="cell-xs-12">
                 <div class="box-outline box-outline-fullwidth box-outline__mod-1">
-
                     <div class="flex justify-center items-center min-h-screen">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-8">
-                            <h2 class="font-bold text-2xl mb-4 text-center">Submit Your Feedback</h2>
+                        <div class="box-container">
+                            <!-- Set a max width for the form -->
                             <form asp-action="Create" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-sm text-red-600 mb-4"></div>
 
                                 <div class="mb-4">
-                                    <label asp-for="Name" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</label>
-                                    <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                    <label asp-for="Name" class="block text-left text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Name</label>
+                                    <input asp-for="Name" class="form-input" />
                                     <span asp-validation-for="Name" class="text-xs text-red-600"></span>
                                 </div>
 
                                 <div class="mb-4">
-                                    <label asp-for="Email" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</label>
-                                    <input asp-for="Email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                    <label asp-for="Email" class="block text-left text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email</label>
+                                    <input asp-for="Email" class="form-input" />
                                     <span asp-validation-for="Email" class="text-xs text-red-600"></span>
                                 </div>
 
                                 <div class="mb-6">
-                                    <label asp-for="Message" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</label>
-                                    <textarea asp-for="Message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3"></textarea>
+                                    <label asp-for="Message" class="block text-left text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Message</label>
+                                    <textarea asp-for="Message" class="form-textarea" rows="3"></textarea>
                                     <span asp-validation-for="Message" class="text-xs text-red-600"></span>
                                 </div>
 
@@ -149,62 +225,6 @@
                             </form>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="section section-md bg-white">
-    <div class="shell">
-        <h2>Our Team</h2>
-        <div class="range range-xs-center range-75">
-            <!--team member 1-->
-            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="team-box box-outline">
-                    <div class="team-image-box">
-                        <img src="images/team-01-295x282.jpg" alt="" width="295" height="282" />
-                        <div class="team-image-caption">
-                            <ul class="list-inline">
-                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="team-caption"><a class="link team-title" href="#">Theresa Smith</a><span>General Manager</span></div>
-                </div>
-            </div>
-            <!--team member 2-->
-            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="team-box box-outline">
-                    <div class="team-image-box">
-                        <img src="images/team-02-295x282.jpg" alt="" width="295" height="282" />
-                        <div class="team-image-caption">
-                            <ul class="list-inline">
-                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="team-caption"><a class="link team-title" href="#">Albert Mills</a><span>Cosmetologist</span></div>
-                </div>
-            </div>
-            <!--team member 3-->
-            <div class="cell-sm-6 cell-md-4 wow fadeInUp" data-wow-delay=".3s">
-                <div class="team-box box-outline">
-                    <div class="team-image-box">
-                        <img src="images/team-03-295x282.jpg" alt="" width="295" height="282" />
-                        <div class="team-image-caption">
-                            <ul class="list-inline">
-                                <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
-                                <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="team-caption"><a class="link team-title" href="#">Sandra Adams</a><span>Receptionist</span></div>
                 </div>
             </div>
         </div>
@@ -217,20 +237,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Your Feedback - USP Hotel</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background-color: #f5f5dc; /* Soft cream color, consistent with the feedback received page */
-        }
-    </style>
+    <title>Our Team</title>
+    <!-- Add your CSS links here -->
+    <link rel="stylesheet" href="path/to/your/css/file.css">
 </head>
 <body>
-
+    <section class="section section-md bg-white">
+        <div class="shell">
+            <h2>Our Team</h2>
+            <div class="range range-xs-center range-75">
+                <!--team member 1-->
+                <div class="cell-sm-3 cell-md-3 wow fadeInUp" data-wow-delay=".1s">
+                    <div class="team-box box-outline">
+                        <div class="team-image-box">
+                            <img src="~/images/team-01-295x282.jpg" alt="" width="295" height="282" />
+                            <div class="team-image-caption">
+                                <ul class="list-inline">
+                                    <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="team-caption"><a class="link team-title" href="#">Shivika Kumar</a><span>General Manager</span></div>
+                    </div>
+                </div>
+                <!--team member 2-->
+                <div class="cell-sm-3 cell-md-3 wow fadeInUp" data-wow-delay=".2s">
+                    <div class="team-box box-outline">
+                        <div class="team-image-box">
+                            <img src="~/images/team-02-295x282.jpg" alt="" width="295" height="282" />
+                            <div class="team-image-caption">
+                                <ul class="list-inline">
+                                    <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="team-caption"><a class="link team-title" href="#">Deeya Bhavsar</a><span>Hotel Manager</span></div>
+                    </div>
+                </div>
+                <!--team member 3-->
+                <div class="cell-sm-3 cell-md-3 wow fadeInUp" data-wow-delay=".3s">
+                    <div class="team-box box-outline">
+                        <div class="team-image-box">
+                            <img src="~/images/team-03-295x282.jpg" alt="" width="295" height="282" />
+                            <div class="team-image-caption">
+                                <ul class="list-inline">
+                                    <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="team-caption"><a class="link team-title" href="#">Sohail Ali</a><span>Sales Manager</span></div>
+                    </div>
+                </div>
+                <!--team member 4-->
+                <div class="cell-sm-3 cell-md-3 wow fadeInUp" data-wow-delay=".4s">
+                    <div class="team-box box-outline">
+                        <div class="team-image-box">
+                            <img src="~/images/team-01-295x282.jpg" alt="" width="295" height="282" />
+                            <div class="team-image-caption">
+                                <ul class="list-inline">
+                                    <li><a class="icon-sm icon-white fa-instagram icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-facebook icon" href="#"></a></li>
+                                    <li><a class="icon-sm icon-white fa-twitter icon" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="team-caption"><a class="link team-title" href="#">Nikhil Singh</a><span>Marketing Manager</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Add your scripts here -->
+    <script src="path/to/your/script.js"></script>
 </body>
 </html>
+
+
+
 
 
 

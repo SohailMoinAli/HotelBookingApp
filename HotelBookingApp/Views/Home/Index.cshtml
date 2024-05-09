@@ -3,147 +3,228 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-
-<section class="section">
-    <div class="shell-wide">
-        <div class="range range-30 range-xs-center">
-            <div class="cell-lg-8 cell-xl-9">
-                <!-- Classic slider-->
-                <section class="section">
-                    <!-- Swiper -->
-
-
-                    <div class="swiper-container swiper-slider swiper-style-2" data-loop="false" data-autoplay="5500" data-simulate-touch="false" data-slide-effect="slide" data-direction="vertical">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" data-slide-bg="images/hotelout.jpg">
-                                <div class="swiper-slide-caption">
-                                    <div class="shell text-sm-left">
-                                        <h1 data-caption-animate="slideInDown" data-caption-delay="100">Your Ideal Retreat</h1>
-                                        <div class="slider-subtitle-group">
-                                            <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
-                                            <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Each room is a haven of comfort</h4>
-                                            <h3 data-caption-animate="slideInLeft" data-caption-delay="800">with modern amenities!</h3>
-                                        </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-slide-bg="images/hotel.jpg">
-                                <div class="swiper-slide-caption">
-                                    <div class="shell text-sm-left">
-                                        <h1 data-caption-animate="slideInDown" data-caption-delay="100">Relax & Unwind</h1>
-                                        <div class="slider-subtitle-group">
-                                            <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
-                                            <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Room Interior</h4>
-                                            <h3 data-caption-animate="slideInLeft" data-caption-delay="800">of our spa treatments</h3>
-                                        </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-slide-bg="images/happy.jpg">
-                                <div class="swiper-slide-caption">
-                                    <div class="shell text-sm-left">
-                                        <h1 data-caption-animate="slideInDown" data-caption-delay="100">Happy Guests</h1>
-                                        <div class="slider-subtitle-group">
-                                            <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
-                                            <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Our guests leave with smiles</h4>
-                                            <h3 data-caption-animate="slideInLeft" data-caption-delay="800">Join us and experience bliss</h3>
-                                        </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                </section>
-            </div>
-            <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
-                <div class="hotel-booking-form">
-                    <div class="text-center">
-                        <!-- Button to Book a Room -->
-                        <a class="button button-effect-ujarak button-lg button-secondary-outline button-square" href="@Url.Action("Index", "Reservation")"><span>Book a Room</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- About us-->
-<section class="section section-md bg-white text-center text-sm-left">
-    <div class="shell-wide">
-        <div class="range range-50 range-xs-center overflow-hidden">
-            <div class="cell-sm-10 cell-md-8 cell-lg-7 wow fadeInUp" data-wow-delay=".1s">
-                <div class="post-video post-video-border">
-                    <div class="post-video__image">
-                        <img src="images/video-bg-1020x525.jpg" alt="" width="1020" height="525" />
-                    </div>
-                    <div class="post-video__body"><a class="link-control post-video__control" data-lightgallery="item" href="https://www.youtube.com/watch?v=I5FlP07kdvM"></a></div>
-                </div>
-            </div>
-            <div class="cell-sm-10 cell-md-8 cell-lg-5 reveal-flex wow fadeInUp" data-wow-delay=".3s">
-                <div class="bg-primary section-wrap-content-var-1">
-                    <div class="section-wrap-content-var-1-inner">
-                        <h2>About Us</h2>
-                        <p>Committed to everyone seeking energy and excitement, we offer endless possibilities to unwind and reenergize.</p>
-                        <div class="group">
-                            <dl class="list-desc">
-                                <dt>Weekdays:</dt>
-                                <dd><span>8:00–20:00</span></dd>
-                            </dl>
-                            <dl class="list-desc">
-                                <dt>Weekends:</dt>
-                                <dd><span>9:00–18:00</span></dd>
-                            </dl>
-                        </div><a class="button button-effect-ujarak button-lg button-secondary-outline button-square" href="about-us.html"><span>book now</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - USP Hotel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Manage Room Types - USP Hotel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
     <style>
         body {
-            background-color: #f5f5dc; /* Soft cream color */
+            background-color: #F7FAFC; /* Lighter background color for a fresher look */
         }
+
+        .box-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            color: #4A5568;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+
+        @@media (min-width: 768px) {
+            .box-container {
+                max-width: 80%; /* Adjust based on breakpoint */
+            }
+        }
+
+        table {
+            width: 100%; /* Ensures the table is full-width */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0; /* Light gray border for subtle separation */
+        }
+
+        th {
+            background-color: #EDF2F7; /* Slightly colored header for distinction */
+            color: #2D3748; /* Darker text for headers */
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #4299E1;
+        }
+
+        .btn-success {
+            background-color: #48BB78;
+        }
+
+        .btn-danger {
+            background-color: #F56565;
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+                opacity: 0.9;
+            }
     </style>
 </head>
+
 <body>
-    
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Cards Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- Special Offer Card (only shown if there are offers) -->
-            @if (Model != null && Model.Any())
-            {
-                foreach (var offer in Model)
-                {
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img class="w-full h-64 object-cover" src="images/special.jpg" alt="Special Offer">
-                        <div class="p-4">
-                            <h2 class="font-bold text-xl mb-2">@offer.Name</h2>
-                            <p>@offer.Description</p>
-                            <p>Price: @offer.Price.ToString("C")</p>
-                            <a href="@Url.Action("BookSpecial", "SpecialBooking", new { offerId = offer.Id })" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Book Now</a>
+    <br />
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+
+    <section class="section">
+        <div class="shell-wide">
+            <div class="range range-30 range-xs-center">
+                <div class="cell-lg-8 cell-xl-9">
+                    <!-- Classic slider-->
+                    <section class="section">
+                        <!-- Swiper -->
+
+
+                        <div class="swiper-container swiper-slider swiper-style-2" data-loop="false" data-autoplay="5500" data-simulate-touch="false" data-slide-effect="slide" data-direction="vertical">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" data-slide-bg="images/hotelout.jpg">
+                                    <div class="swiper-slide-caption">
+                                        <div class="shell text-sm-left">
+                                            <h1 data-caption-animate="slideInDown" data-caption-delay="100">Your Ideal Retreat</h1>
+                                            <div class="slider-subtitle-group">
+                                                <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
+                                                <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Each room is a haven of comfort</h4>
+                                                <h3 data-caption-animate="slideInLeft" data-caption-delay="800">with modern amenities!</h3>
+                                            </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" data-slide-bg="images/hotel.jpg">
+                                    <div class="swiper-slide-caption">
+                                        <div class="shell text-sm-left">
+                                            <h1 data-caption-animate="slideInDown" data-caption-delay="100">Relax & Unwind</h1>
+                                            <div class="slider-subtitle-group">
+                                                <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
+                                                <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Room Interior</h4>
+                                                <h3 data-caption-animate="slideInLeft" data-caption-delay="800">of our spa treatments</h3>
+                                            </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide" data-slide-bg="images/happy.jpg">
+                                    <div class="swiper-slide-caption">
+                                        <div class="shell text-sm-left">
+                                            <h1 data-caption-animate="slideInDown" data-caption-delay="100">Happy Guests</h1>
+                                            <div class="slider-subtitle-group">
+                                                <div class="decoration-line" data-caption-animate="slideInDown" data-caption-delay="400"></div>
+                                                <h4 data-caption-animate="slideInLeft" data-caption-delay="700">Our guests leave with smiles</h4>
+                                                <h3 data-caption-animate="slideInLeft" data-caption-delay="800">Join us and experience bliss</h3>
+                                            </div><a class="button button-effect-ujarak button-lg button-white-outline button-square" href="about-us.html" data-caption-animate="slideInLeft" data-caption-delay="1150"><span>learn more</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
+                    <div class="hotel-booking-form">
+                        <div class="text-center">
+                            <!-- Button to Book a Room -->
+                            <a class="button button-effect-ujarak button-lg button-secondary-outline button-square" href="@Url.Action("Index", "Reservation")"><span>Check Availability</span></a>
                         </div>
                     </div>
-                }
-            }
-            else
-            {
-                <!-- This section ensures that no cards are displayed if there are no special offers -->
-            }
-
-
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    <!-- About us-->
+    <section class="section section-md bg-white text-center text-sm-left">
+        <div class="shell-wide">
+            <div class="range range-50 range-xs-center overflow-hidden">
+                <div class="cell-sm-10 cell-md-8 cell-lg-7 wow fadeInUp" data-wow-delay=".1s">
+                    <div class="post-video post-video-border">
+                        <div class="post-video__image">
+                            <img src="images/2.jpg" alt="" width="1020" height="525" />
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-sm-10 cell-md-8 cell-lg-5 reveal-flex wow fadeInUp" data-wow-delay=".3s">
+                    <div class="bg-primary section-wrap-content-var-1">
+                        <div class="section-wrap-content-var-1-inner">
+                            <h2>About Us</h2>
+                            <p>Committed to everyone seeking energy and excitement, we offer endless possibilities to unwind and reenergize.</p>
+                            <div class="group">
+                                <dl class="list-desc">
+                                    <dt>Weekdays:</dt>
+                                    <dd><span>8:00–20:00</span></dd>
+                                </dl>
+                                <dl class="list-desc">
+                                    <dt>Weekends:</dt>
+                                    <dd><span>9:00–18:00</span></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Special Offer Card (only shown if there are offers) -->
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var offer in Model)
+                    {
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img class="w-full h-64 object-cover" src="images/special.jpg" alt="Special Offer">
+                            <div class="p-4">
+                                <h2 class="font-bold text-xl mb-2">@offer.Name</h2>
+                                <p>@offer.Description</p>
+                                <h3>Price: @offer.Price.ToString("C")</h3>
+                                <a href="@Url.Action("BookSpecial", "SpecialBooking", new { offerId = offer.Id })" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Book Now</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <!-- This section ensures that no cards are displayed if there are no special offers -->
+                }
+
+
+            </div>
+        </div>
+    </section>
 </body>
 </html>
